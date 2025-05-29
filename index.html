@@ -149,8 +149,17 @@ a.cta-button:hover {
 
       document.getElementById('quizForm').style.display = 'none';
       document.getElementById('result').style.display = 'block';
-      document.getElementById('orgType').textContent = type;
-      
+     
+      const emojiMap = {
+  "Heart-Led Hustler": "❤️",
+  "Insight Seeker": "📈",
+  "Resourceful Reactor": "🧨",
+  "Aligned Achiever": "🎯"
+};
+
+document.getElementById('orgType').textContent = `${emojiMap[type]} ${type}`;
+
+            
 document.getElementById('orgDesc').innerHTML = `
   <p>${descriptions[type].text}</p>
   <p><a href="${descriptions[type].link}" target="_blank">Learn more about this org type →</a></p>
