@@ -15,6 +15,22 @@
     .step.active { display: block; }
     .question { margin-bottom: 1.5rem; }
     button { padding: 0.5rem 1rem; margin-top: 1rem; }
+a.cta-button {
+  display: inline-block;
+  background-color: #0077cc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+a.cta-button:hover {
+  background-color: #005fa3;
+}
+
+    
   </style>
 </head>
 <body>
@@ -134,7 +150,11 @@
       document.getElementById('quizForm').style.display = 'none';
       document.getElementById('result').style.display = 'block';
       document.getElementById('orgType').textContent = type;
-      document.getElementById('orgDesc').textContent = descriptions[type];
+      
+document.getElementById('orgDesc').innerHTML = `
+  <p>${descriptions[type].text}</p>
+  <p><a href="${descriptions[type].link}" target="_blank" class="cta-button">Learn More</a></p>
+`;
     });
 
     document.getElementById('restartBtn').addEventListener('click', () => {
