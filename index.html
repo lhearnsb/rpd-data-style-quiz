@@ -88,12 +88,12 @@
     let currentStep = 0;
     const nextBtn = document.getElementById('nextBtn');
 
-nextBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', () => {
   const currentInputs = steps[currentStep].querySelectorAll('input[type="radio"]');
   const oneChecked = Array.from(currentInputs).some(input => input.checked);
 
   if (!oneChecked) {
-    alert("Please select an answer before continuing.");
+    alert("Please select an answer.");
     return;
   }
 
