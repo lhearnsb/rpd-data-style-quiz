@@ -1,112 +1,131 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nonprofit Org Type Quiz</title>
+  <meta property="og:title" content="What Type of Nonprofit Are You?" />
+  <meta property="og:description" content="Find your nonprofit org type based on alignment and structure." />
+  <meta property="og:image" content="https://www.reflectplando.com/images/quiz-preview.png" />
+  <meta property="og:url" content="https://www.reflectplando.com/quiz" />
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
     .step { display: none; }
     .step.active { display: block; }
-    button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 1rem; }
-    h1, h2 { text-align: center; }
+    .question { margin-bottom: 1.5rem; }
+    button { padding: 0.5rem 1rem; margin-top: 1rem; }
   </style>
 </head>
 <body>
   <h1>What Type of Nonprofit Organization Are You?</h1>
   <form id="quizForm">
-    <div class="step active">
-      <p>1. What best describes how your team sets goals?</p>
-      <label><input type="radio" name="q1" value="0,1" required /> A) Guided by values, but no clear targets</label><br>
-      <label><input type="radio" name="q1" value="1,1" /> B) Track program goals, not revenue</label><br>
-      <label><input type="radio" name="q1" value="2,2" /> C) Performance and finance tracked but siloed</label><br>
-      <label><input type="radio" name="q1" value="3,3" /> D) Shared cross-department goals with reviews</label><br>
-      <button type="button" onclick="nextStep()">Next</button>
+    <div class="step active" data-step="1">
+      <div class="question">
+        <p>1. What best describes how your team sets goals?</p>
+        <label><input type="radio" name="q1" value="0,1" required /> A) We’re guided by values but don’t always have clear targets.</label><br/>
+        <label><input type="radio" name="q1" value="1,1" /> B) We track progress toward program goals but not revenue.</label><br/>
+        <label><input type="radio" name="q1" value="2,1" /> C) We have performance and financial metrics, but they’re siloed.</label><br/>
+        <label><input type="radio" name="q1" value="3,1" /> D) We set shared goals across departments with regular reviews.</label>
+      </div>
     </div>
-
-    <div class="step">
-      <p>2. How accessible is your data to people across your team?</p>
-      <label><input type="radio" name="q2" value="0,0" required /> A) Not accessible</label><br>
-      <label><input type="radio" name="q2" value="1,0" /> B) Only select leaders</label><br>
-      <label><input type="radio" name="q2" value="2,1" /> C) Technically accessible, underused</label><br>
-      <label><input type="radio" name="q2" value="3,2" /> D) Easy to access, actively used</label><br>
-      <button type="button" onclick="nextStep()">Next</button>
+    <div class="step" data-step="2">
+      <div class="question">
+        <p>2. How accessible is your data to people across your team?</p>
+        <label><input type="radio" name="q2" value="0,0" required /> A) Not accessible.</label><br/>
+        <label><input type="radio" name="q2" value="1,0" /> B) Only select leaders have access.</label><br/>
+        <label><input type="radio" name="q2" value="2,0" /> C) It’s technically accessible, but underused.</label><br/>
+        <label><input type="radio" name="q2" value="3,0" /> D) Easy to access and actively used in decision-making.</label>
+      </div>
     </div>
-
-    <div class="step">
-      <p>3. What’s your relationship with data?</p>
-      <label><input type="radio" name="q3" value="0,0" required /> A) For grants only, not decision-making</label><br>
-      <label><input type="radio" name="q3" value="1,0" /> B) Wish we had better data</label><br>
-      <label><input type="radio" name="q3" value="2,1" /> C) Plenty of data, not always actionable</label><br>
-      <label><input type="radio" name="q3" value="3,2" /> D) Data guides decisions and storytelling</label><br>
-      <button type="button" onclick="nextStep()">Next</button>
+    <div class="step" data-step="3">
+      <div class="question">
+        <p>3. What’s your relationship with data?</p>
+        <label><input type="radio" name="q3" value="0,0" required /> A) We collect data for grants, but it doesn’t inform decisions.</label><br/>
+        <label><input type="radio" name="q3" value="1,0" /> B) We wish we had better data but aren’t sure where to start.</label><br/>
+        <label><input type="radio" name="q3" value="2,0" /> C) We have plenty of data, but it’s not always actionable.</label><br/>
+        <label><input type="radio" name="q3" value="3,0" /> D) Data helps us make decisions and tell our story.</label>
+      </div>
     </div>
-
-    <div class="step">
-      <p>4. How often do you revisit or adjust your metrics?</p>
-      <label><input type="radio" name="q4" value="0,0" required /> A) Rarely</label><br>
-      <label><input type="radio" name="q4" value="1,1" /> B) When funders ask or big changes happen</label><br>
-      <label><input type="radio" name="q4" value="2,2" /> C) Occasionally, no set cadence</label><br>
-      <label><input type="radio" name="q4" value="3,3" /> D) Regularly evolve based on outcomes</label><br>
-      <button type="button" onclick="nextStep()">Next</button>
+    <div class="step" data-step="4">
+      <div class="question">
+        <p>4. How often do you revisit or adjust your metrics?</p>
+        <label><input type="radio" name="q4" value="0,0" required /> A) Rarely. We mostly just report on what we already track.</label><br/>
+        <label><input type="radio" name="q4" value="1,0" /> B) When funders ask or something major changes.</label><br/>
+        <label><input type="radio" name="q4" value="2,0" /> C) We check in occasionally but don’t have a set cadence.</label><br/>
+        <label><input type="radio" name="q4" value="3,0" /> D) We regularly review and evolve our metrics based on outcomes.</label>
+      </div>
     </div>
-
-    <div class="step">
-      <p>5. How do fundraising and programs work together?</p>
-      <label><input type="radio" name="q5" value="0,1" required /> A) Like neighbors who nod but rarely talk</label><br>
-      <label><input type="radio" name="q5" value="1,1" /> B) Team up when deadlines demand it</label><br>
-      <label><input type="radio" name="q5" value="2,2" /> C) Share info, but not fully aligned</label><br>
-      <label><input type="radio" name="q5" value="3,3" /> D) Work closely with shared metrics</label><br>
-      <button type="button" onclick="nextStep()">Next</button>
+    <div class="step" data-step="5">
+      <div class="question">
+        <p>5. How do fundraising and programs work together?</p>
+        <label><input type="radio" name="q5" value="0,1" required /> A) Like neighbors who nod but rarely talk.</label><br/>
+        <label><input type="radio" name="q5" value="1,1" /> B) They team up when deadlines demand it.</label><br/>
+        <label><input type="radio" name="q5" value="2,1" /> C) They share information but aren’t truly aligned.</label><br/>
+        <label><input type="radio" name="q5" value="3,1" /> D) They work closely and use shared metrics to plan and reflect.</label>
+      </div>
     </div>
-
-    <div class="step">
-      <p>6. What challenge feels most familiar right now?</p>
-      <label><input type="radio" name="q6" value="0,1" required /> A) Want to make a difference, but no focus</label><br>
-      <label><input type="radio" name="q6" value="1,1" /> B) Hope we’re making a difference, but things feel scattered</label><br>
-      <label><input type="radio" name="q6" value="2,2" /> C) Clear goals, but reporting is draining</label><br>
-      <label><input type="radio" name="q6" value="3,3" /> D) Aligned and data-informed, but thinking long-term</label><br>
+    <div class="step" data-step="6">
+      <div class="question">
+        <p>6. What challenge feels most familiar right now?</p>
+        <label><input type="radio" name="q6" value="0,1" required /> A) We want to make a difference, but it’s unclear what to focus on.</label><br/>
+        <label><input type="radio" name="q6" value="1,1" /> B) We hope we’re making a difference, but things feel scattered.</label><br/>
+        <label><input type="radio" name="q6" value="2,1" /> C) We have clear goals and know we’re making an impact, but reporting is draining.</label><br/>
+        <label><input type="radio" name="q6" value="3,1" /> D) We’re aligned on goals and make data-informed decisions.</label>
+      </div>
       <button type="submit">See My Results</button>
     </div>
+    <button type="button" id="nextBtn">Next</button>
   </form>
+
+  <div class="result" id="result" style="display:none;">
+    <h2>Your Org Type: <span id="orgType"></span></h2>
+    <p id="orgDesc"></p>
+  </div>
 
   <script>
     const steps = document.querySelectorAll('.step');
     let currentStep = 0;
+    const nextBtn = document.getElementById('nextBtn');
 
-    function nextStep() {
-      const current = steps[currentStep];
-      const inputs = current.querySelectorAll('input[type="radio"]');
-      const oneChecked = Array.from(inputs).some(input => input.checked);
-
-      if (!oneChecked) {
-        alert("Please select an answer.");
-        return;
+    nextBtn.addEventListener('click', () => {
+      if (currentStep < steps.length - 1) {
+        steps[currentStep].classList.remove('active');
+        currentStep++;
+        steps[currentStep].classList.add('active');
+        if (currentStep === steps.length - 1) {
+          nextBtn.style.display = 'none';
+        }
       }
+    });
 
-      current.classList.remove('active');
-      steps[++currentStep].classList.add('active');
-    }
+    const descriptions = {
+      "Heart-Led Hustler": "You act with passion but could use more structure to sustain your mission.",
+      "Insight Seeker": "You’re reflective and data-curious, but not yet fully aligned in your execution.",
+      "Resourceful Reactor": "You’re responsive and scrappy, but alignment and structure need work.",
+      "Aligned Achiever": "You’ve got clarity, systems, and momentum to match. Keep going!"
+    };
 
-    const quizForm = document.getElementById('quizForm');
-    quizForm.addEventListener('submit', function (e) {
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      let formData = new FormData(this);
       let structure = 0, alignment = 0;
-
-      const formData = new FormData(quizForm);
-      for (let [key, value] of formData.entries()) {
-        const [s, a] = value.split(',').map(Number);
+      for (let value of formData.values()) {
+        let [s, a] = value.split(',').map(Number);
         structure += s;
         alignment += a;
       }
 
       let type = '';
-      if (structure >= 9 && alignment >= 12) type = 'aligned-achiever';
-      else if (structure < 9 && alignment >= 12) type = 'insight-seeker';
-      else if (structure >= 9 && alignment < 12) type = 'heart-led-hustler';
-      else type = 'resourceful-reactor';
+      if (structure >= 9 && alignment >= 6) type = 'Aligned Achiever';
+      else if (structure < 9 && alignment >= 6) type = 'Insight Seeker';
+      else if (structure >= 9 && alignment < 6) type = 'Heart-Led Hustler';
+      else type = 'Resourceful Reactor';
 
-      window.location.href = `https://www.reflectplando.com/results?type=${type}`;
+      document.getElementById('quizForm').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('orgType').textContent = type;
+      document.getElementById('orgDesc').textContent = descriptions[type];
     });
   </script>
 </body>
