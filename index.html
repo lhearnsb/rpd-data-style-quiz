@@ -136,6 +136,21 @@
       document.getElementById('orgType').textContent = type;
       document.getElementById('orgDesc').textContent = descriptions[type];
     });
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quizForm').style.display = 'block';
+  steps.forEach((step, i) => {
+    step.classList.remove('active');
+    if (i === 0) step.classList.add('active');
+  });
+  currentStep = 0;
+  nextBtn.style.display = 'inline-block';
+
+  // Clear all answers
+  document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+});
+
   </script>
 </body>
 </html>
