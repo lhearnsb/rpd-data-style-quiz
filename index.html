@@ -38,7 +38,7 @@ a.cta-button:hover {
   <form id="quizForm">
     <div class="step active" data-step="1">
       <div class="question">
-        <p>1. What best describes how your team sets goals? 😀😀😀</p>
+        <p>1. What best describes how your team sets goals? 😀😀</p>
         <label><input type="radio" name="q1" value="0,1" required /> A) We’re guided by values but don’t always have clear targets.</label><br/>
         <label><input type="radio" name="q1" value="1,1" /> B) We track progress toward program goals but not revenue.</label><br/>
         <label><input type="radio" name="q1" value="2,1" /> C) We have performance and financial metrics, but they’re siloed.</label><br/>
@@ -124,12 +124,25 @@ a.cta-button:hover {
 });
 
 
-    const descriptions = {
-      "❤️ Heart-Led Hustler": "❤️ You act with passion but could use more structure to sustain your mission.",
-      "📈 Insight Seeker": "📈 You’re reflective and data-curious, but not yet fully aligned in your execution.",
-      "🧨 Resourceful Reactor": "🧨 You’re responsive and scrappy, but alignment and structure need work.",
-      "🎯 Aligned Achiever": "🎯 You’ve got clarity, systems, and momentum to match. Keep going!"
-    };
+  const descriptions = {
+  "Heart-Led Hustler": {
+    text: "You act with passion but could use more structure to sustain your mission.",
+    link: "https://www.reflectplando.com/heart-led-hustler"
+  },
+  "Insight Seeker": {
+    text: "You’re reflective and data-curious, but not yet fully aligned in your execution.",
+    link: "https://www.reflectplando.com/insight-seeker"
+  },
+  "Resourceful Reactor": {
+    text: "You’re responsive and scrappy, but alignment and structure need work.",
+    link: "https://www.reflectplando.com/resourceful-reactor"
+  },
+  "Aligned Achiever": {
+    text: "You’ve got clarity, systems, and momentum to match. Keep going!",
+    link: "https://www.reflectplando.com/aligned-achiever"
+  }
+};
+
 
     document.getElementById('quizForm').addEventListener('submit', function(e) {
       e.preventDefault();
