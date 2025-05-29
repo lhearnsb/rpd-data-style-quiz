@@ -162,8 +162,9 @@ document.getElementById('orgType').textContent = `${emojiMap[type]} ${type}`;
             
 document.getElementById('orgDesc').innerHTML = `
   <p>${descriptions[type].text}</p>
-  <p><a href="${descriptions[type].link}" target="_blank">Learn more about this org type →</a></p>
+  <p><a href="${descriptions[type].link}" class="cta-button" target="_blank">Learn More</a></p>
 `;
+
     });
 
     document.getElementById('restartBtn').addEventListener('click', () => {
