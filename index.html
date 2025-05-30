@@ -23,8 +23,22 @@
 
   h1, h2 {
     text-align: center;
-    color: #fff;
+    color: #222;
     font-weight: 600;
+  }
+
+  .quiz-hero-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff; 
+  margin-bottom: 0.5rem;
+  }
+
+ .quiz-hero-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #fff; 
+  margin-bottom: 0.5rem;
   }
 
   .question {
@@ -54,7 +68,7 @@
 
   button {
     background-color: #fff;
-    color: #fff;
+    color: #4c5270;
     border: none;
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
@@ -94,6 +108,19 @@
     background-color: #005fa3;
   }
 
+  .restartBtn {
+    background-color: #4c5270;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: block;
+    margin: 1.5rem auto 0;
+  }
+
   .step {
     display: none;
   }
@@ -112,13 +139,13 @@
 </head>
 <body>  
   <section style="text-align: center; padding: 2rem 1rem; max-width: 600px; margin: auto;">
-  <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">
-    Ready to impress the board and empower your team?
-  </h1>
-  <p style="font-size: 1.1rem; line-height: 1.5; color: #333;">
+  
+<h1 class="quiz-hero-title">Ready to impress the board and empower your team?</h1>
+
+<p class="quiz-hero-subtitle">  
     Take this 2-minute quiz to discover your organization’s style—
-    and walk away with actionable next steps for insight-driven, sustainable leadership.
-  </p>
+    and walk away with actionable next steps for insight-driven, sustainable leadership. 
+</p>
 </section>
 
   <form id="quizForm">
@@ -183,7 +210,7 @@
 <div class="result" id="result" style="display:none;">
   <h2>Your Org Type: <span id="orgType"></span></h2>
   <p id="orgDesc"></p>
-  <button id="restartBtn">Take the Quiz Again</button>
+  <button class="restartBtn">Take the Quiz Again</button>
 </div>
 
   <script>
