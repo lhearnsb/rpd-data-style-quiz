@@ -217,7 +217,7 @@
 
   <p style="margin-top: 1.5rem;">
   <a href="#" id="restartLink" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">
-    ⟲ Take the quiz again
+    Take the quiz again
   </a>
 </p>
 
@@ -308,16 +308,17 @@ document.getElementById('orgDesc').innerHTML = `
     });
 
    document.getElementById('restartLink').addEventListener('click', (e) => {
-  e.preventDefault(); // prevents jumping to top of page
-  resultDiv.style.display = "none";
-  quizForm.style.display = "block";
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quizForm').style.display = 'block';
   steps.forEach((step, i) => {
-    step.classList.remove("active");
-    if (i === 0) step.classList.add("active");
+    step.classList.remove('active');
+    if (i === 0) step.classList.add('active');
   });
   currentStep = 0;
-  nextBtn.style.display = "inline-block";
-  document.querySelectorAll('input[type="radio"]').forEach((input) => (input.checked = false));
+  nextBtn.style.display = 'inline-block';
+
+  // Clear all answers
+  document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
 });
 
 
