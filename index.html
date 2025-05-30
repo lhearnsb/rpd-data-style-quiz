@@ -287,6 +287,29 @@
       else if (structure >= 7 && alignment <= 6) type = 'Resourceful Reactor';
       else type = 'caseBreakline162';
 
+
+      const answers = {};
+let index = 1;
+for (let value of formData.values()) {
+  answers[`q${index}`] = value;
+  index++;
+}
+
+sendToSheet({
+  orgType: type,
+  structure,
+  alignment,
+  answers,
+  cta: '',         // will fill this in later when CTA is clicked
+  name: '',        // placeholder for later
+  title: '',
+  email: '',
+  org: '',
+  function: ''
+});
+
+
+      
       document.getElementById('quizForm').style.display = 'none';
       document.getElementById('result').style.display = 'block';
      
@@ -320,6 +343,23 @@ document.getElementById('orgDesc').innerHTML = `
   // Clear all answers
   document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
 });
+
+
+
+
+  function sendToSheet(data) {
+    fetch('https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1WXMJ-JFssMVJVWWZggUScS0d7SButO2trWG/exec', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.text();
+    })
+    .then(text => console.log('Logged to Google Sheets:', text))
+    .catch(error => console.error('Error logging to Google Sheets:', error));
+  }
 
 
   </script>
