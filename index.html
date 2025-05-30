@@ -9,33 +9,101 @@
   <meta property="og:description" content="Find your nonprofit org type based on alignment and structure." />
   <meta property="og:image" content="https://www.reflectplando.com/images/quiz-preview.png" />
   <meta property="og:url" content="https://www.reflectplando.com/quiz" />
-  <style>
-    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; background-color:4c5270; color:ffffff}
-    .step { display: none; }
-    .step.active { display: block; }
-    .question {
-      margin-bottom: 2rem;
-      line-height: 1.5;
-      }
 
-    button { padding: 0.5rem 1rem; margin-top: 1rem; }
-a.cta-button {
-  display: inline-block;
-  background-color: #0077cc;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  margin-top: 1rem;
-  transition: background-color 0.2s ease;
-}
-a.cta-button:hover {
-  background-color: #005fa3;
-}
+  <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    padding: 2rem 1rem;
+    max-width: 640px;
+    margin: auto;
+    background-color: #f9fafb;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  h1, h2 {
+    text-align: center;
+    color: #222;
+    font-weight: 600;
+  }
+
+  .question {
+    background: #fff;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+  }
+
+  .question p {
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .question label {
+    display: block;
+    padding: 0.4rem 0;
+    cursor: pointer;
+  }
+
+  input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+
+  button {
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: block;
+    margin: 1.5rem auto 0;
+  }
+
+  button:hover {
+    background-color: #005fa3;
+  }
+
+  .result {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  a.cta-button {
+    display: inline-block;
+    background-color: #0077cc;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    transition: background-color 0.2s ease;
+  }
+
+  a.cta-button:hover {
+    background-color: #005fa3;
+  }
+
+  .step {
+    display: none;
+  }
+
+  .step.active {
+    display: block;
+  }
 
     
   </style>
+
 </head>
 <body>  
   <section style="text-align: center; padding: 2rem 1rem; max-width: 600px; margin: auto;">
