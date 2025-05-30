@@ -108,7 +108,7 @@
     background-color: #005fa3;
   }
 
-  .restartBtn {
+  .restart-button {
     background-color: #4c5270;
     color: #fff;
     border: none;
@@ -120,6 +120,10 @@
     display: block;
     margin: 1.5rem auto 0;
   }
+
+  .restart-button:hover {
+  background-color: #f9fafb;
+}
 
   .step {
     display: none;
@@ -210,7 +214,8 @@
 <div class="result" id="result" style="display:none;">
   <h2>Your Org Type: <span id="orgType"></span></h2>
   <p id="orgDesc"></p>
-  <button class="restartBtn">Take the Quiz Again</button>
+  <button id="restartBtn" class="restart-button">Take the Quiz Again</button>
+
 </div>
 
   <script>
