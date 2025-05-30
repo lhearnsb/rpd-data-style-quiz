@@ -155,10 +155,11 @@ a.cta-button:hover {
       }
 
       let type = '';
-      if (structure >= 9 && alignment >= 6) type = 'Aligned Achiever';
-      else if (structure < 9 && alignment >= 6) type = 'Insight Seeker';
-      else if (structure >= 9 && alignment < 6) type = 'Heart-Led Hustler';
-      else type = 'Resourceful Reactor';
+           if (structure >= 7 && alignment >= 7) type = 'Aligned Achiever';
+      else if (structure <= 6 && alignment >= 7) type = 'Insight Seeker';
+      else if (structure <= 6 && alignment <= 6) type = 'Heart-Led Hustler';
+      else if (structure >= 7 && alignment <= 6) type = 'Resourceful Reactor';
+      else type = 'caseBreakline162';
 
       document.getElementById('quizForm').style.display = 'none';
       document.getElementById('result').style.display = 'block';
