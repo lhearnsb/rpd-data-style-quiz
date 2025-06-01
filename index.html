@@ -354,23 +354,24 @@ fetch('https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1W
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({
-    orgType: type,
-    structure: structure,
-    alignment: alignment,
-    q1: formData.get('q1'),
-    q2: formData.get('q2'),
-    q3: formData.get('q3'),
-    q4: formData.get('q4'),
-    q5: formData.get('q5'),
-    q6: formData.get('q6'),
-    ctaClicked: 'Learn More', // or 'Get Shareables' depending on the button clicked
-    name: "",       // Will be filled in from the form if applicable
-    title: "",
-    email: "",
-    orgName: "",
-    orgFunction: ""
-  })
+body: JSON.stringify({
+  orgType: data.orgType,
+  structure: data.structure,
+  alignment: data.alignment,
+  q1: data.answers.q1,
+  q2: data.answers.q2,
+  q3: data.answers.q3,
+  q4: data.answers.q4,
+  q5: data.answers.q5,
+  q6: data.answers.q6,
+  ctaClicked: data.cta,
+  name: data.name,
+  title: data.title,
+  email: data.email,
+  orgName: data.org,
+  orgFunction: data.function
+})
+
 })
 .then(response => response.text())
 .then(result => console.log('Logged to Google Sheet:', result))
