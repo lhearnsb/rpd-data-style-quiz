@@ -155,7 +155,7 @@
   <form id="quizForm">
     <div class="step active" data-step="1">
       <div class="question">
-        <p>What best describes how your team sets goals?</p>
+        <p>What best describes how your team sets goals?👀</p>
         <label><input type="radio" name="q1" value="0,0" required /> We’re guided by values but don’t always have clear targets.</label><br/>
         <label><input type="radio" name="q1" value="0,1" /> We track progress toward program goals but not revenue.</label><br/>
         <label><input type="radio" name="q1" value="0,2" /> We have performance and financial metrics, but they’re siloed.</label><br/>
@@ -351,32 +351,31 @@ document.getElementById('orgDesc').innerHTML = `
   function sendToSheet(data) {
 fetch('https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1WXMJ-JFssMVJVWWZggUScS0d7SButO2trWG/exec', {
   method: 'POST',
+  mode: 'no-cors',  // Add this line temporarily
   headers: {
     'Content-Type': 'application/json'
   },
-body: JSON.stringify({
-  orgType: data.orgType,
-  structure: data.structure,
-  alignment: data.alignment,
-  q1: data.answers.q1,
-  q2: data.answers.q2,
-  q3: data.answers.q3,
-  q4: data.answers.q4,
-  q5: data.answers.q5,
-  q6: data.answers.q6,
-  ctaClicked: data.cta,
-  name: data.name,
-  title: data.title,
-  email: data.email,
-  orgName: data.org,
-  orgFunction: data.function
+  body: JSON.stringify({
+    orgType: data.orgType,
+    structure: data.structure,
+    alignment: data.alignment,
+    q1: data.answers.q1,
+    q2: data.answers.q2,
+    q3: data.answers.q3,
+    q4: data.answers.q4,
+    q5: data.answers.q5,
+    q6: data.answers.q6,
+    ctaClicked: data.cta,
+    name: data.name,
+    title: data.title,
+    email: data.email,
+    orgName: data.org,
+    orgFunction: data.function
+  })
 })
-
-})
-.then(response => response.text())
-.then(result => console.log('Logged to Google Sheet:', result))
+.then(result => console.log('Request sent!'))
 .catch(error => console.error('Logging error:', error));
-    
+
   }
 
 
