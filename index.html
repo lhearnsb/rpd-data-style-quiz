@@ -373,7 +373,10 @@ fetch('https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1W
     orgFunction: data.function
   })
 })
-.then(result => console.log('Request sent!'))
+   .then(response => response.json())
+.then(result => console.log('Server response:', result))
+
+
 .catch(error => console.error('Logging error:', error));
 
   }
