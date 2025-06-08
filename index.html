@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Org Type Quiz</title>
-  <meta property="og:title" content="Is your organization’s decision-making style working against you?" />
+  <meta property="og:title" content="Is your organization's decision-making style working against you?" />
   <meta property="og:description" content="Take this quick quiz to find out—and unlock actionable steps to impress the board and empower your team." />
   <meta property="og:image" content="https://www.reflectplando.com/images/quiz-preview.png" />
   <meta property="og:url" content="https://www.reflectplando.com/quiz" />
@@ -144,7 +144,7 @@
 <body>  
   <section style="text-align: center; padding: 2rem 1rem; max-width: 600px; margin: auto;">
   
-<h1 class="quiz-hero-title">Is your organization's decision-making style working for or against you?</h1>
+<h1 class="quiz-hero-title">Is your organization's decision-making style working against you?</h1>
 
 <p class="quiz-hero-subtitle">  
     Take this quick quiz to find out—and unlock actionable steps to impress the board and empower your team. 
@@ -256,15 +256,15 @@
     link: "https://www.reflectplando.com/heart-led-hustler"
   },
   "Insight Seeker": {
-    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You’re ready to turn curiosity into clarity—and clarity into action.",
+    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.",
     link: "https://www.reflectplando.com/insight-seeker"
   },
   "Resourceful Reactor": {
-    text: "You’re scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it’s hard to sustain progress. You make things work in the moment—now it’s time to build for what’s next.",
+    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.",
     link: "https://www.reflectplando.com/resourceful-reactor"
   },
   "Mission Mover": {
-    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don’t just talk about impact—you make it happen.",
+    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.",
     link: "https://www.reflectplando.com/mission-mover"
   }
 };
@@ -348,39 +348,82 @@ document.getElementById('orgDesc').innerHTML = `
 
 
   function sendToSheet(data) {
-    fetch('https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1WXMJ-JFssMVJVWWZggUScS0d7SButO2trWG/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        orgType: data.orgType,
-        structure: data.structure,
-        alignment: data.alignment,
-        q1: data.answers.q1,
-        q2: data.answers.q2,
-        q3: data.answers.q3,
-        q4: data.answers.q4,
-        q5: data.answers.q5,
-        q6: data.answers.q6,
-        ctaClicked: data.cta,
-        name: data.name,
-        title: data.title,
-        email: data.email,
-        orgName: data.org,
-        orgFunction: data.function
-      })
-    })
-    .then(() => {
-      console.log('Data sent successfully!');
-      // Show success message to user if needed
-    })
-    .catch(error => {
-      console.error('Error sending data:', error);
-      // Show error message to user if needed
-      alert('There was an error saving your results. Please try again.');
+    // Show loading state
+    const submitButton = document.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = 'Saving...';
+    submitButton.disabled = true;
+
+    // Create a form submission
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://script.google.com/macros/s/AKfycbycyVal3ZKETUyNwxkALMZPUrdSQWqJ1WXMJ-JFssMVJVWWZggUScS0d7SButO2trWG/exec';
+    form.target = 'form-response'; // Target an iframe instead of new tab
+
+    // Create and append iframe for response
+    const iframe = document.createElement('iframe');
+    iframe.name = 'form-response';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    // Add all data as hidden inputs
+    const formData = {
+      orgType: data.orgType,
+      structure: data.structure,
+      alignment: data.alignment,
+      q1: data.answers.q1,
+      q2: data.answers.q2,
+      q3: data.answers.q3,
+      q4: data.answers.q4,
+      q5: data.answers.q5,
+      q6: data.answers.q6,
+      ctaClicked: data.cta,
+      name: data.name,
+      title: data.title,
+      email: data.email,
+      orgName: data.org,
+      orgFunction: data.function
+    };
+
+    // Create hidden inputs for each field
+    Object.entries(formData).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      form.appendChild(input);
     });
+
+    // Add form to document, submit it, and remove it
+    document.body.appendChild(form);
+    form.submit();
+
+    // Handle the response
+    iframe.onload = function() {
+      // Remove the iframe
+      document.body.removeChild(iframe);
+      document.body.removeChild(form);
+      
+      // Show success state
+      submitButton.textContent = originalButtonText;
+      submitButton.style.backgroundColor = '#7ed957';
+      submitButton.style.color = '#fff';
+      
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+        submitButton.style.backgroundColor = '';
+        submitButton.style.color = '';
+      }, 2000);
+    };
+
+    // Handle errors
+    iframe.onerror = function() {
+      submitButton.textContent = 'Error - Try Again';
+      submitButton.disabled = false;
+      alert('There was an error saving your results. Please try again.');
+    };
   }
 
 
