@@ -264,9 +264,9 @@
     text: "You’re responsive and scrappy, but alignment and structure need work.",
     link: "https://www.reflectplando.com/resourceful-reactor"
   },
-  "Aligned Achiever": {
+  "Mission Mover": {
     text: "You’ve got clarity, systems, and momentum to match. Keep going!",
-    link: "https://www.reflectplando.com/aligned-achiever"
+    link: "https://www.reflectplando.com/mission-mover"
   }
 };
 
@@ -282,7 +282,7 @@
       }
 
       let type = '';
-           if (structure >= 7 && alignment >= 7) type = 'Aligned Achiever';
+           if (structure >= 7 && alignment >= 7) type = 'Mission Mover';
       else if (structure <= 6 && alignment >= 7) type = 'Insight Seeker';
       else if (structure <= 6 && alignment <= 6) type = 'Heart-Led Hustler';
       else if (structure >= 7 && alignment <= 6) type = 'Resourceful Reactor';
@@ -318,7 +318,7 @@ sendToSheet({
   "Heart-Led Hustler": "❤️",
   "Insight Seeker": "🧭",
   "Resourceful Reactor": "🧨",
-  "Aligned Achiever": "🚀"
+  "Mission Mover": "🚀"
 };
 
 document.getElementById('orgType').textContent = `${emojiMap[type]} ${type}`;
