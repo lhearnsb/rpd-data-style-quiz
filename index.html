@@ -227,6 +227,58 @@
   </p>
 </div>
 
+<div id="plannerForm" style="display: none;" class="result">
+  <h2>Unlock Your Personalized Strategy Planner</h2>
+  <p style="text-align: center; margin-bottom: 2rem;">
+    Based on your quiz results, this one-page guide helps you reflect, plan, and take action—on your own or with your team.
+  </p>
+
+  <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
+    <h3 style="margin-top: 0; color: #4c5270;">What You'll Get:</h3>
+    <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0;">
+      <li style="margin-bottom: 0.5rem;">🧠 A quick guide to your org type and what it means</li>
+      <li style="margin-bottom: 0.5rem;">💬 Coaching-style prompts to spark reflection and discussion</li>
+      <li style="margin-bottom: 0.5rem;">🧭 Team-focused questions to turn insight into shared goals</li>
+      <li style="margin-bottom: 0.5rem;">🚀 Clear next steps to move your mission forward</li>
+    </ul>
+
+    <form id="strategyPlannerForm">
+      <div style="margin-bottom: 1rem;">
+        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">📧 Email Address*</label>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="name" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">👤 Name</label>
+        <input type="text" id="name" name="name" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="title" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">🪪 Title/Role</label>
+        <input type="text" id="title" name="title" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="org" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">🏢 Organization Name</label>
+        <input type="text" id="org" name="org" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; color: #4c5270;">
+          <input type="checkbox" id="newsletter" name="newsletter">
+          Keep me posted on new tools and trainings
+        </label>
+      </div>
+
+      <button type="submit" class="cta-button" style="width: 100%; background-color: #7ed957;">Send My Personalized Planner</button>
+    </form>
+
+    <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+      *We respect your time and inbox. No spam—just helpful tools.
+    </p>
+  </div>
+</div>
+
   <script>
     const steps = document.querySelectorAll('.step');
     let currentStep = 0;
@@ -331,11 +383,11 @@ document.getElementById('orgDesc').innerHTML = `
 // Update the recommendations link based on org type
 document.getElementById('recommendationsLink').href = descriptions[type].link;
 
-// Add click handler for the planner link
+// Update the planner link click handler
 document.getElementById('plannerLink').addEventListener('click', (e) => {
   e.preventDefault();
-  // We'll implement this in the next step
-  alert('Strategy Planner coming soon!');
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('plannerForm').style.display = 'block';
 });
 
     });
@@ -352,6 +404,28 @@ document.getElementById('plannerLink').addEventListener('click', (e) => {
 
   // Clear all answers
   document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+});
+
+// Add form submission handler
+document.getElementById('strategyPlannerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Get form data
+  const formData = {
+    email: document.getElementById('email').value,
+    name: document.getElementById('name').value,
+    org: document.getElementById('org').value,
+    title: document.getElementById('title').value,
+    newsletter: document.getElementById('newsletter').checked,
+    orgType: document.getElementById('orgType').textContent,
+    // We'll add the quiz answers here in the next step
+  };
+
+  // For now, just log the data
+  console.log('Form submitted:', formData);
+  
+  // We'll implement the planner generation and PDF creation in the next step
+  alert('Strategy Planner generation coming soon!');
 });
 
 
