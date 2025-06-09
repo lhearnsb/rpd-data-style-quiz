@@ -231,9 +231,9 @@
   <h2>Your Org Style: <span id="orgType"></span></h2>
   <p id="orgDesc"></p>
 
-  <div class="cta-buttons" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-    <a href="#" id="recommendationsLink" class="cta-button" target="_blank">See My Recommendations</a>
+  <div class="cta-buttons" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.2rem; align-items: center;">
     <a href="#" id="plannerLink" class="cta-button" style="background-color: #7ed957;">Get My Personal Strategy Planner</a>
+    <a href="#" id="recommendationsLink" class="cta-button" target="_blank">See My Recommendations</a>
   </div>
 
   <p style="margin-top: 1.5rem;">
@@ -313,11 +313,14 @@
         We've also emailed you a copy so you can forward it easily or keep it handy for future planning.
       </p>
       <a href="#" id="backToQuiz" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
+
+
     </div>
   </div>
 </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     const steps = document.querySelectorAll('.step');
     let currentStep = 0;
@@ -618,13 +621,12 @@ document.getElementById('backToQuiz').addEventListener('click', (e) => {
 });
 
 // Add PDF download functionality
-document.getElementById('downloadPDF').addEventListener('click', function(e) {
-  e.preventDefault();
+document.getElementById('downloadPDF').addEventListener('click', async function() {
+  const button = this;
+  const originalText = button.textContent;
+  button.textContent = 'Generating PDF...';
+  button.disabled = true;
   
-  // Show loading state
-  this.textContent = 'Generating PDF...';
-  this.disabled = true;
-
   try {
     // Get the planner content
     const content = document.getElementById('plannerContent').innerText;
@@ -708,13 +710,23 @@ document.getElementById('downloadPDF').addEventListener('click', function(e) {
     // Save the PDF
     doc.save('personalized-strategy-planner.pdf');
     
-    // Reset button state
-    this.textContent = 'Download PDF';
-    this.disabled = false;
-  } catch (err) {
-    console.error('PDF generation failed:', err);
-    this.textContent = 'Error - Try Again';
-    this.disabled = false;
+    // After generating the PDF, send it via email
+    const pdfBlob = doc.output('blob');
+    const emailSent = await sendPDFByEmail(pdfBlob);
+    
+    if (emailSent) {
+      button.textContent = 'PDF Sent to Email!';
+    } else {
+      button.textContent = 'Error - Try Again';
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    button.textContent = 'Error - Try Again';
+  } finally {
+    button.disabled = false;
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 3000);
   }
 });
 
@@ -800,6 +812,34 @@ document.querySelector('a[href="https://calendly.com/laura-hearnsberger-reflectp
     };
   }
 
+  // Initialize EmailJS with your public key
+  (function() {
+    emailjs.init("YOUR_PUBLIC_KEY"); // You'll need to replace this with your actual EmailJS public key
+  })();
+
+  // Function to send PDF via email
+  async function sendPDFByEmail(pdfBlob) {
+    try {
+      const formData = new FormData();
+      formData.append('pdf', pdfBlob, 'personalized-strategy-planner.pdf');
+      
+      const response = await emailjs.send(
+        'YOUR_SERVICE_ID', // You'll need to replace this with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // You'll need to replace this with your EmailJS template ID
+        {
+          to_email: document.getElementById('email').value,
+          message: 'Here is your personalized strategy planner!',
+          pdf: pdfBlob
+        }
+      );
+      
+      console.log('Email sent successfully:', response);
+      return true;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return false;
+    }
+  }
 
   </script>
   
