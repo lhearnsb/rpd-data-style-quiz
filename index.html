@@ -91,10 +91,10 @@
     text-align: center;
   }
 
-  a.cta-button {
+  .cta-button {
     display: inline-block;
     background-color: #7ed957;
-    color: #fff;
+    color: #fff !important;
     padding: 0.6rem 1.2rem;
     text-decoration: none;
     border-radius: 6px;
@@ -103,9 +103,9 @@
     transition: background-color 0.2s ease;
   }
 
-  a.cta-button:hover {
+  .cta-button:hover {
     background-color: #c1ff72;
-    color: #4c5270;
+    color: #4c5270 !important;
   }
 
   .restart-button {
@@ -136,6 +136,22 @@
   #nextBtn {
   display: block;
   margin: 1.5rem auto 0;
+  }
+
+  .planner-content {
+    border: 2px solid #ff5757;
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: #fff;
+  }
+
+  .prompt-container {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
   
   </style>
@@ -217,14 +233,14 @@
 
   <div class="cta-buttons" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
     <a href="#" id="recommendationsLink" class="cta-button" target="_blank">See My Recommendations</a>
-    <a href="#" id="plannerLink" class="cta-button" style="background-color: #ff5757;">Get My Personal Strategy Planner</a>
+    <a href="#" id="plannerLink" class="cta-button" style="background-color: #7ed957;">Get My Personal Strategy Planner</a>
   </div>
 
   <p style="margin-top: 1.5rem;">
-    <a href="#" id="restartLink" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">
-      Take the quiz again
-    </a>
-  </p>
+  <a href="#" id="restartLink" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">
+    Take the quiz again
+  </a>
+</p>
 </div>
 
 <div id="plannerForm" style="display: none;" class="result">
@@ -290,8 +306,9 @@
       <!-- Planner content will be generated here -->
     </div>
 
-    <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-      <button id="downloadPDF" class="cta-button" style="background-color: #7ed957;">Download PDF</button>
+    <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center;">
+      <p style="margin-bottom: 0.5rem;">Bring this to your next team meeting.</p>
+      <button id="downloadPDF" class="cta-button" style="background-color: #7ed957; margin-top: 0.5rem;">Download PDF</button>
       <p style="text-align: center; margin-top: 1rem; color: #666;">
         We've also emailed you a copy so you can forward it easily or keep it handy for future planning.
       </p>
@@ -300,6 +317,7 @@
   </div>
 </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     const steps = document.querySelectorAll('.step');
     let currentStep = 0;
@@ -427,124 +445,127 @@ document.getElementById('plannerLink').addEventListener('click', (e) => {
   document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
 });
 
-// Add planner generation logic
+// Constants and configuration
+const EMOJI_MAP = {
+  "Heart-Led Hustler": "❤️",
+  "Insight Seeker": "🧭",
+  "Resourceful Reactor": "🧨",
+  "Mission Mover": "🚀"
+};
+
+const STANDARD_PROMPTS = {
+  reflect: [
+    "How do you share the story that data is telling?",
+    "Is this a personal need or a systemic one? Are the challenges you're facing tied to your role—or are they rooted in broader organizational patterns?"
+  ],
+  plan: [
+    "What might prevent success?",
+    "Who should be involved in seeing this through?",
+    "Who else might benefit from learning how to tell compelling stories with data?"
+  ]
+};
+
+const ANSWER_PROMPTS = {
+  q1: {
+    "0,0": "What are your guiding values? How do people know?",
+    "0,1": "How do you track program goals? How does your work affect revenue?",
+    "0,2": "Why are metrics siloed? How could sharing them improve org value?",
+    "0,3": "What keeps goals in focus between reviews when decisions are being made?"
+  },
+  q2: {
+    "0,0": "How do you access and use data for solo tasks?",
+    "1,0": "What is the process for select leaders to access and use data?",
+    "2,0": "In what situations do people use the available data? How actionable is existing data?",
+    "3,0": "Can people access useful reports and dashboards in under five minutes to inform timely decision-making?"
+  },
+  q3: {
+    "0,0": "How are decisions made? How do you keep track of data?",
+    "1,0": "What kind of data would help your organization the most?",
+    "2,0": "Where does data live? Why isn't it actionable?",
+    "3,0": "What is your org's story? How has it evolved over time? What's the next chapter?"
+  },
+  q4: {
+    "0,0": "What do you currently track? How is it related to daily activities?",
+    "1,0": "How does the organization anticipate major changes? How are funders' needs communicated?",
+    "2,0": "What spurs the occasional metric check-ins? What do check-ins look like?",
+    "3,0": "What does the evolution of metrics in response to performance and revenue outcomes look like?"
+  },
+  q5: {
+    "0,0": "What could improve collaboration between your fundraising and program teams?",
+    "0,1": "What tangible results would you expect from regular collaboration between fundraising and program teams?",
+    "0,2": "How do fundraising and programs share information? What kind of information do they share?",
+    "0,3": "What is the glue that keeps the fundraising and program teams working together? How do they share success stories and maintain momentum?"
+  },
+  q6: {
+    "0,0": "What would making a difference look like?",
+    "0,1": "Who does know the effect of your work on other teams? How do they know? What opportunities exist for interacting with other teams?",
+    "0,2": "What makes it difficult to access useful reports? How do you typically work around this? How do you tell the story of your success to stakeholders?",
+    "0,3": "How is the organization progressing on its goals? What challenges are on the horizon?"
+  }
+};
+
+// Helper functions
+function cleanOrgType(orgType) {
+  return orgType.replace(/[^a-zA-Z\s-]/g, '').trim();
+}
+
+function generatePromptList(prompts) {
+  return prompts.map(prompt => `
+    <li style="margin-bottom: 1rem; padding: 1rem; background: #ffffff; border-radius: 8px;">
+      <p style="margin: 0; color: #4c5270;">${prompt}</p>
+    </li>
+  `).join('');
+}
+
+// Main planner generation function
 function generatePlanner(orgType, answers) {
-  const answerPrompts = {
-    q1: {
-      "0,0": "What are your guiding values? How do people know?",
-      "0,1": "How do you track program goals? How does your work affect revenue?",
-      "0,2": "Why are metrics siloed? How could sharing them improve org value?",
-      "0,3": "What keeps goals in focus between reviews when decisions are being made?"
-    },
-    q2: {
-      "0,0": "How do you access and use data for solo tasks?",
-      "1,0": "What is the process for select leaders to access and use data?",
-      "2,0": "In what situations do people use the available data? How actionable is existing data?",
-      "3,0": "Can people access useful reports and dashboards in under five minutes to inform timely decision-making?"
-    },
-    q3: {
-      "0,0": "How are decisions made? How do you keep track of data?",
-      "1,0": "What kind of data would help your organization the most?",
-      "2,0": "Where does data live? Why isn't it actionable? ",
-      "3,0": "What is your org's story? How has it evolved over time? What's the next chapter?"
-    },
-    q4: {
-      "0,0": "What do you currently track? How is it related to daily activities?",
-      "1,0": "How does the organization anticipate major changes? How are funders' needs communicated?",
-      "2,0": "What spurs the occasional metric check-ins? What do check-ins look like?",
-      "3,0": "What does the evolution of metrics in response to performance and revenue outcomes look like?"
-    },
-    q5: {
-      "0,0": "What could improve collaboration between your fundraising and program teams?",
-      "0,1": "What tangible results would you expect from regular collaboration between fundraising and program teams?",
-      "0,2": "How do fundraising and programs share information? What kind of information do they share?",
-      "0,3": "What is the glue that keeps the fundraising and program teams working together? How do they share success stories and maintain momentum?"
-    },
-    q6: {
-      "0,0": "What would making a difference look like?",
-      "0,1": "Who does know the effect of your work on other teams? How do they know? What opportunities exist for interacting with other teams?",
-      "0,2": "What makes it difficult to access useful reports? How do you typically work around this? How do you tell the story of your success to stakeholders?",
-      "0,3": "How is the organization progressing on its goals? What challenges are on the horizon?"
-    }
-  };
-
-  const standardPrompts = {
-    reflect: [
-      "How do you share the story that data is telling?",
-      "Is this a personal need or a systemic one? Are the challenges you're facing tied to your role—or are they rooted in broader organizational patterns?"
-    ],
-    plan: [
-      "Who should be involved in seeing this through?",
-      "Who else might benefit from learning how to tell compelling stories with data?",
-      "What might prevent success?"
-    ]
-  };
-
-  // Clean the org type name and handle special cases
-  const orgTypeClean = orgType.replace(/[^a-zA-Z\s-]/g, '').trim();
-  const emojiMap = {
-    "Heart-Led Hustler": "❤️",
-    "Insight Seeker": "🧭",
-    "Resourceful Reactor": "🧨",
-    "Mission Mover": "🚀"
-  };
-
+  const orgTypeClean = cleanOrgType(orgType);
+  const emoji = EMOJI_MAP[orgTypeClean] || '❤️';
+  
   // Generate custom prompts based on answers
-  const customPrompts = Object.entries(answers).map(([q, value]) => {
-    return answerPrompts[q][value];
-  });
+  const customPrompts = Object.entries(answers).map(([q, value]) => ANSWER_PROMPTS[q][value]);
 
   return `
-    <div style="margin-bottom: 2rem;">
-      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-        <span style="font-size: 2rem;">${emojiMap[orgTypeClean] || '❤️'}</span>
-        <h3 style="color: #4c5270; margin: 0;">${orgType}</h3>
-      </div>
-      <p>${descriptions[orgTypeClean]?.text || descriptions["Heart-Led Hustler"].text}</p>
+    <div class="planner-content">
+      <h2 style="color: #4c5270; margin-bottom: 2rem; text-align: center; padding: 1rem;">Personalized Strategy Planner</br>for Your ${orgType} Quadrant Placement</h2>
       
-      <div style="margin: 2rem 0; text-align: center;">
-        <img src="https://www.reflectplando.com/images/quadrant-diagram.png" 
-             alt="Organization Type Quadrant" 
-             style="max-width: 100%; height: auto;"
-             onerror="this.style.display='none'">
+      <div style="margin-bottom: 2rem; padding: 0 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          
+        </div>
+        <p>${descriptions[orgTypeClean]?.text || descriptions["Heart-Led Hustler"].text}</p>
+        
+        <div style="margin: 2rem 0; text-align: center;">
+          <img src="https://www.reflectplando.com/images/quadrant-diagram.png" 
+               alt="Organization Type Quadrant" 
+               style="max-width: 100%; height: auto;"
+               onerror="this.style.display='none'">
+        </div>
       </div>
-    </div>
 
-    <div style="margin-bottom: 2rem;">
-      <h3 style="color: #4c5270; margin-bottom: 1rem;">Reflect</h3>
-      <p style="margin-bottom: 1rem; color: #666;">
-        These questions were generated based on your quiz responses. Use them to reflect—solo or with your team—on what it means to be a ${orgTypeClean} ${emojiMap[orgTypeClean] || '❤️'} in your unique context.
-      </p>
-      <ul style="list-style: none; padding: 0;">
-        ${customPrompts.map(prompt => `
-          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-            <p style="margin: 0; color: #4c5270;">${prompt}</p>
-          </li>
-        `).join('')}
-        ${standardPrompts.reflect.map(prompt => `
-          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-            <p style="margin: 0; color: #4c5270;">${prompt}</p>
-          </li>
-        `).join('')}
-      </ul>
-    </div>
+      <div style="margin-bottom: 2rem;">
+        <h3 style="color: #4c5270; margin-bottom: 1rem;">Reflect</h3>
+        <p style="margin-bottom: 1rem; color: #666;">
+          These questions were generated based on your quiz responses. Use them to reflect—solo or with your team—on what it means to be a ${orgTypeClean} in your unique context.
+        </p>
+        <ul style="list-style: none; padding: 0;">
+          ${generatePromptList(customPrompts)}
+          ${generatePromptList(STANDARD_PROMPTS.reflect)}
+        </ul>
+      </div>
 
-    <div style="margin-bottom: 2rem;">
-      <h3 style="color: #4c5270; margin-bottom: 1rem;">Plan</h3>
-      <ul style="list-style: none; padding: 0;">
-        ${standardPrompts.plan.map(prompt => `
-          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-            <p style="margin: 0; color: #4c5270;">${prompt}</p>
-          </li>
-        `).join('')}
-      </ul>
-    </div>
+      <div style="margin-bottom: 2rem;">
+        <h3 style="color: #4c5270; margin-bottom: 1rem;">Plan</h3>
+        <ul style="list-style: none; padding: 0;">
+          ${generatePromptList(STANDARD_PROMPTS.plan)}
+        </ul>
+      </div>
 
-    <div style="margin-bottom: 2rem;">
-      <h3 style="color: #4c5270; margin-bottom: 1rem;">Do!</h3>
-      <p style="margin-bottom: 1rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-      <a href="https://calendly.com/reflectplando/consultation" class="cta-button" style="background-color: #7ed957; display: inline-block; margin-bottom: 1rem;">Schedule a Free Consultation</a>
-      <p>You can bring this to your next team meeting.</p>
+      <div style="margin-bottom: 1rem;">
+        <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
+        <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
+        <a href="https://calendly.com/reflectplando/consultation" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
+      </div>
     </div>
   `;
 }
@@ -567,7 +588,7 @@ document.getElementById('strategyPlannerForm').addEventListener('submit', functi
   // Get quiz answers
   const quizAnswers = {};
   document.querySelectorAll('input[type="radio"]:checked').forEach((input) => {
-    const questionName = input.name; // This will be q1, q2, etc.
+    const questionName = input.name;
     quizAnswers[questionName] = input.value;
   });
 
@@ -578,6 +599,9 @@ document.getElementById('strategyPlannerForm').addEventListener('submit', functi
   // Show planner and hide form
   document.getElementById('plannerForm').style.display = 'none';
   document.getElementById('plannerDisplay').style.display = 'block';
+
+  // Scroll to top of the page
+  window.scrollTo(0, 0);
 
   // Send data to Google Sheet
   sendToSheet({
@@ -599,6 +623,86 @@ document.getElementById('backToQuiz').addEventListener('click', (e) => {
   });
   nextBtn.style.display = 'inline-block';
 });
+
+// Add PDF download functionality
+document.getElementById('downloadPDF').addEventListener('click', async function(e) {
+  e.preventDefault();
+  
+  // Show loading state
+  this.textContent = 'Generating PDF...';
+  this.disabled = true;
+
+  try {
+    // Get the planner content element - targeting the generated content
+    const element = document.getElementById('plannerContent');
+    console.log('Planner content element:', element);
+    console.log('Planner content HTML:', element.innerHTML);
+
+    if (!element) {
+      throw new Error('Planner content not found');
+    }
+
+    // Create a clone of the element
+    const clonedElement = element.cloneNode(true);
+    
+    // Add basic styling to ensure visibility
+    clonedElement.style.backgroundColor = 'white';
+    clonedElement.style.color = 'black';
+    clonedElement.style.padding = '20px';
+    
+    // Create a temporary container
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+    container.appendChild(clonedElement);
+    document.body.appendChild(container);
+
+    console.log('Container created with content');
+
+    const opt = {
+      margin: 0.5,
+      filename: 'personalized-strategy-planner.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { 
+        scale: 2,
+        useCORS: true,
+        logging: true,
+        windowWidth: 800,
+        backgroundColor: '#ffffff'
+      },
+      jsPDF: { 
+        unit: 'in', 
+        format: 'letter', 
+        orientation: 'portrait'
+      }
+    };
+
+    console.log('Starting PDF generation with options:', opt);
+    
+    // Generate PDF
+    await html2pdf()
+      .set(opt)
+      .from(container)
+      .save()
+      .then(() => {
+        console.log('PDF generation completed successfully');
+        // Clean up
+        document.body.removeChild(container);
+      });
+
+    // Reset button state
+    this.textContent = 'Download PDF';
+    this.disabled = false;
+  } catch (err) {
+    console.error('PDF generation failed with error:', err);
+    console.error('Error stack:', err.stack);
+    this.textContent = 'Error - Try Again';
+    this.disabled = false;
+  }
+});
+
+// Update the consultation link to open in a new tab
+document.querySelector('a[href="https://calendly.com/reflectplando/consultation"]').setAttribute('target', '_blank');
 
   function sendToSheet(data) {
     // Show loading state
