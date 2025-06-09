@@ -461,7 +461,7 @@ function generatePlanner(orgType, answers) {
       "0,3": "What is the glue that keeps the fundraising and program teams working together? How do they share success stories and maintain momentum?"
     },
     q6: {
-      "0,0": "What would help you gain clarity on what to focus on?",
+      "0,0": "What would making a difference look like?",
       "0,1": "Who does know the effect of your work on other teams? How do they know? What opportunities exist for interacting with other teams?",
       "0,2": "What makes it difficult to access useful reports? How do you typically work around this? How do you tell the story of your success to stakeholders?",
       "0,3": "How is the organization progressing on its goals? What challenges are on the horizon?"
@@ -480,7 +480,8 @@ function generatePlanner(orgType, answers) {
     ]
   };
 
-  const orgTypeClean = orgType.replace(/[^a-zA-Z\s]/g, '').trim();
+  // Clean the org type name and handle special cases
+  const orgTypeClean = orgType.replace(/[^a-zA-Z\s-]/g, '').trim();
   const emojiMap = {
     "Heart-Led Hustler": "❤️",
     "Insight Seeker": "🧭",
@@ -496,10 +497,10 @@ function generatePlanner(orgType, answers) {
   return `
     <div style="margin-bottom: 2rem;">
       <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-        <span style="font-size: 2rem;">${emojiMap[orgTypeClean]}</span>
+        <span style="font-size: 2rem;">${emojiMap[orgTypeClean] || '❤️'}</span>
         <h3 style="color: #4c5270; margin: 0;">${orgType}</h3>
       </div>
-      <p>${descriptions[orgTypeClean].text}</p>
+      <p>${descriptions[orgTypeClean]?.text || descriptions["Heart-Led Hustler"].text}</p>
       
       <div style="margin: 2rem 0; text-align: center;">
         <img src="https://www.reflectplando.com/images/quadrant-diagram.png" 
@@ -512,7 +513,7 @@ function generatePlanner(orgType, answers) {
     <div style="margin-bottom: 2rem;">
       <h3 style="color: #4c5270; margin-bottom: 1rem;">Reflect</h3>
       <p style="margin-bottom: 1rem; color: #666;">
-        These questions were generated based on your quiz responses. Use them to reflect—solo or with your team—on what it means to be a ${orgTypeClean} ${emojiMap[orgTypeClean]} in your unique context.
+        These questions were generated based on your quiz responses. Use them to reflect—solo or with your team—on what it means to be a ${orgTypeClean} ${emojiMap[orgTypeClean] || '❤️'} in your unique context.
       </p>
       <ul style="list-style: none; padding: 0;">
         ${customPrompts.map(prompt => `
