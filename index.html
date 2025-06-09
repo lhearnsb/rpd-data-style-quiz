@@ -317,7 +317,7 @@
   </div>
 </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const steps = document.querySelectorAll('.step');
     let currentStep = 0;
@@ -534,13 +534,6 @@ function generatePlanner(orgType, answers) {
           
         </div>
         <p>${descriptions[orgTypeClean]?.text || descriptions["Heart-Led Hustler"].text}</p>
-        
-        <div style="margin: 2rem 0; text-align: center;">
-          <img src="https://www.reflectplando.com/images/quadrant-diagram.png" 
-               alt="Organization Type Quadrant" 
-               style="max-width: 100%; height: auto;"
-               onerror="this.style.display='none'">
-        </div>
       </div>
 
       <div style="margin-bottom: 2rem;">
@@ -632,56 +625,92 @@ document.getElementById('downloadPDF').addEventListener('click', function(e) {
   this.textContent = 'Generating PDF...';
   this.disabled = true;
 
-  // Get the planner content element
-  const element = document.getElementById('plannerContent');
-  console.log('Planner content element:', element);
-
-  if (!element) {
-    console.error('Planner content element not found');
+  try {
+    // Get the planner content
+    const content = document.getElementById('plannerContent').innerText;
+    
+    // Create new jsPDF instance
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set font
+    doc.setFont("helvetica");
+    
+    // Split content into lines
+    const lines = content.split('\n');
+    let y = 20; // Starting y position
+    
+    // Add title
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("Personalized Strategy Planner", 20, y);
+    y += 15;
+    
+    // Add organization type (without emoji)
+    doc.setFontSize(14);
+    const orgType = document.getElementById('orgType').innerText.split(' ').slice(1).join(' ');
+    doc.text(orgType, 20, y);
+    y += 15;
+    
+    // Reset font for body text
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    
+    // Process content
+    let currentSection = '';
+    const pageWidth = doc.internal.pageSize.width;
+    const margin = 20;
+    const maxWidth = pageWidth - (2 * margin);
+    
+    // Skip the first few lines that contain the title and organization type
+    const contentLines = lines.slice(3);
+    
+    contentLines.forEach(line => {
+      if (line.trim()) { // Only process non-empty lines
+        // Check if this is a section header
+        if (line.includes('Reflect') || line.includes('Plan') || line.includes('Do!')) {
+          y += 10; // Add extra space before section
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          currentSection = line;
+        } else if (line.startsWith('•')) {
+          // Handle bullet points
+          doc.setFontSize(11);
+          doc.setFont("helvetica", "normal");
+          y += 7;
+        } else {
+          // Regular text
+          doc.setFontSize(12);
+          doc.setFont("helvetica", "normal");
+        }
+        
+        // Split long lines into multiple lines
+        const splitLines = doc.splitTextToSize(line, maxWidth);
+        splitLines.forEach(splitLine => {
+          // Add the line
+          doc.text(splitLine, 20, y);
+          y += 7;
+          
+          // Check if we need a new page
+          if (y > 270) {
+            doc.addPage();
+            y = 20;
+          }
+        });
+      }
+    });
+    
+    // Save the PDF
+    doc.save('personalized-strategy-planner.pdf');
+    
+    // Reset button state
+    this.textContent = 'Download PDF';
+    this.disabled = false;
+  } catch (err) {
+    console.error('PDF generation failed:', err);
     this.textContent = 'Error - Try Again';
     this.disabled = false;
-    return;
   }
-
-  // Basic options
-  const opt = {
-    margin: 1,
-    filename: 'personalized-strategy-planner.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2,
-      useCORS: true,
-      logging: true
-    },
-    jsPDF: { 
-      unit: 'in', 
-      format: 'letter', 
-      orientation: 'portrait'
-    }
-  };
-
-  console.log('Starting PDF generation...');
-  
-  // Generate PDF
-  html2pdf()
-    .set(opt)
-    .from(element)
-    .save()
-    .then(() => {
-      console.log('PDF generation completed successfully');
-      this.textContent = 'Download PDF';
-      this.disabled = false;
-    })
-    .catch(err => {
-      console.error('PDF generation failed with error:', err);
-      console.error('Error details:', {
-        message: err.message,
-        stack: err.stack,
-        name: err.name
-      });
-      this.textContent = 'Error - Try Again';
-      this.disabled = false;
-    });
 });
 
 // Update the consultation link to open in a new tab
