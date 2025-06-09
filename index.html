@@ -557,7 +557,7 @@ function generatePlanner(orgType, answers) {
       <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
         <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-        <a href="https://calendly.com/reflectplando/consultation" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
+        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
       </div>
     </div>
   `;
@@ -684,6 +684,11 @@ document.getElementById('downloadPDF').addEventListener('click', function(e) {
           doc.setFont("helvetica", "normal");
         }
         
+        // Add Calendly link if this is the consultation line
+        if (line.includes('Schedule a Free Consultation')) {
+          line = 'Schedule a Free Consultation: https://calendly.com/laura-hearnsberger-reflectplando/30min';
+        }
+        
         // Split long lines into multiple lines
         const splitLines = doc.splitTextToSize(line, maxWidth);
         splitLines.forEach(splitLine => {
@@ -714,7 +719,7 @@ document.getElementById('downloadPDF').addEventListener('click', function(e) {
 });
 
 // Update the consultation link to open in a new tab
-document.querySelector('a[href="https://calendly.com/reflectplando/consultation"]').setAttribute('target', '_blank');
+document.querySelector('a[href="https://calendly.com/laura-hearnsberger-reflectplando/30min"]').setAttribute('target', '_blank');
 
   function sendToSheet(data) {
     // Show loading state
