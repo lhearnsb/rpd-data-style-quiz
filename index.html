@@ -625,80 +625,63 @@ document.getElementById('backToQuiz').addEventListener('click', (e) => {
 });
 
 // Add PDF download functionality
-document.getElementById('downloadPDF').addEventListener('click', async function(e) {
+document.getElementById('downloadPDF').addEventListener('click', function(e) {
   e.preventDefault();
   
   // Show loading state
   this.textContent = 'Generating PDF...';
   this.disabled = true;
 
-  try {
-    // Get the planner content element - targeting the generated content
-    const element = document.getElementById('plannerContent');
-    console.log('Planner content element:', element);
-    console.log('Planner content HTML:', element.innerHTML);
+  // Get the planner content element
+  const element = document.getElementById('plannerContent');
+  console.log('Planner content element:', element);
 
-    if (!element) {
-      throw new Error('Planner content not found');
-    }
-
-    // Create a clone of the element
-    const clonedElement = element.cloneNode(true);
-    
-    // Add basic styling to ensure visibility
-    clonedElement.style.backgroundColor = 'white';
-    clonedElement.style.color = 'black';
-    clonedElement.style.padding = '20px';
-    
-    // Create a temporary container
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
-    container.appendChild(clonedElement);
-    document.body.appendChild(container);
-
-    console.log('Container created with content');
-
-    const opt = {
-      margin: 0.5,
-      filename: 'personalized-strategy-planner.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
-        scale: 2,
-        useCORS: true,
-        logging: true,
-        windowWidth: 800,
-        backgroundColor: '#ffffff'
-      },
-      jsPDF: { 
-        unit: 'in', 
-        format: 'letter', 
-        orientation: 'portrait'
-      }
-    };
-
-    console.log('Starting PDF generation with options:', opt);
-    
-    // Generate PDF
-    await html2pdf()
-      .set(opt)
-      .from(container)
-      .save()
-      .then(() => {
-        console.log('PDF generation completed successfully');
-        // Clean up
-        document.body.removeChild(container);
-      });
-
-    // Reset button state
-    this.textContent = 'Download PDF';
-    this.disabled = false;
-  } catch (err) {
-    console.error('PDF generation failed with error:', err);
-    console.error('Error stack:', err.stack);
+  if (!element) {
+    console.error('Planner content element not found');
     this.textContent = 'Error - Try Again';
     this.disabled = false;
+    return;
   }
+
+  // Basic options
+  const opt = {
+    margin: 1,
+    filename: 'personalized-strategy-planner.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { 
+      scale: 2,
+      useCORS: true,
+      logging: true
+    },
+    jsPDF: { 
+      unit: 'in', 
+      format: 'letter', 
+      orientation: 'portrait'
+    }
+  };
+
+  console.log('Starting PDF generation...');
+  
+  // Generate PDF
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save()
+    .then(() => {
+      console.log('PDF generation completed successfully');
+      this.textContent = 'Download PDF';
+      this.disabled = false;
+    })
+    .catch(err => {
+      console.error('PDF generation failed with error:', err);
+      console.error('Error details:', {
+        message: err.message,
+        stack: err.stack,
+        name: err.name
+      });
+      this.textContent = 'Error - Try Again';
+      this.disabled = false;
+    });
 });
 
 // Update the consultation link to open in a new tab
