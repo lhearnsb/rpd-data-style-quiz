@@ -244,7 +244,7 @@
 
     <form id="strategyPlannerForm">
       <div style="margin-bottom: 1rem;">
-        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">📧 Email Address*</label>
+        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">📧 *Email Address</label>
         <input type="email" id="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
       </div>
 
@@ -276,6 +276,27 @@
     <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
       *We respect your time and inbox. No spam—just helpful tools.
     </p>
+  </div>
+</div>
+
+<div id="plannerDisplay" style="display: none;" class="result">
+  <h2>Your Personalized Strategy Planner Is Ready!</h2>
+  <p style="text-align: center; margin-bottom: 2rem;">
+    View it below—or download a copy to save or share with your team.
+  </p>
+  
+  <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
+    <div id="plannerContent">
+      <!-- Planner content will be generated here -->
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+      <button id="downloadPDF" class="cta-button" style="background-color: #7ed957;">Download PDF</button>
+      <p style="text-align: center; margin-top: 1rem; color: #666;">
+        We've also emailed you a copy so you can forward it easily or keep it handy for future planning.
+      </p>
+      <a href="#" id="backToQuiz" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
+    </div>
   </div>
 </div>
 
@@ -406,7 +427,128 @@ document.getElementById('plannerLink').addEventListener('click', (e) => {
   document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
 });
 
-// Add form submission handler
+// Add planner generation logic
+function generatePlanner(orgType, answers) {
+  const answerPrompts = {
+    q1: {
+      "0,0": "What are your guiding values? How do people know?",
+      "0,1": "How do you track program goals? How does your work affect revenue?",
+      "0,2": "Why are metrics siloed? How could sharing them improve org value?",
+      "0,3": "What keeps goals in focus between reviews when decisions are being made?"
+    },
+    q2: {
+      "0,0": "How do you access and use data for solo tasks?",
+      "1,0": "What is the process for select leaders to access and use data?",
+      "2,0": "In what situations do people use the available data? How actionable is existing data?",
+      "3,0": "Can people access useful reports and dashboards in under five minutes to inform timely decision-making?"
+    },
+    q3: {
+      "0,0": "How are decisions made? How do you keep track of data?",
+      "1,0": "What kind of data would help your organization the most?",
+      "2,0": "Where does data live? Why isn't it actionable? ",
+      "3,0": "What is your org's story? How has it evolved over time? What's the next chapter?"
+    },
+    q4: {
+      "0,0": "What do you currently track? How is it related to daily activities?",
+      "1,0": "How does the organization anticipate major changes? How are funders' needs communicated?",
+      "2,0": "What spurs the occasional metric check-ins? What do check-ins look like?",
+      "3,0": "What does the evolution of metrics in response to performance and revenue outcomes look like?"
+    },
+    q5: {
+      "0,0": "What could improve collaboration between your fundraising and program teams?",
+      "0,1": "What tangible results would you expect from regular collaboration between fundraising and program teams?",
+      "0,2": "How do fundraising and programs share information? What kind of information do they share?",
+      "0,3": "What is the glue that keeps the fundraising and program teams working together? How do they share success stories and maintain momentum?"
+    },
+    q6: {
+      "0,0": "What would help you gain clarity on what to focus on?",
+      "0,1": "Who does know the effect of your work on other teams? How do they know? What opportunities exist for interacting with other teams?",
+      "0,2": "What makes it difficult to access useful reports? How do you typically work around this? How do you tell the story of your success to stakeholders?",
+      "0,3": "How is the organization progressing on its goals? What challenges are on the horizon?"
+    }
+  };
+
+  const standardPrompts = {
+    reflect: [
+      "How do you share the story that data is telling?",
+      "Is this a personal need or a systemic one? Are the challenges you're facing tied to your role—or are they rooted in broader organizational patterns?"
+    ],
+    plan: [
+      "Who should be involved in seeing this through?",
+      "Who else might benefit from learning how to tell compelling stories with data?",
+      "What might prevent success?"
+    ]
+  };
+
+  const orgTypeClean = orgType.replace(/[^a-zA-Z\s]/g, '').trim();
+  const emojiMap = {
+    "Heart-Led Hustler": "❤️",
+    "Insight Seeker": "🧭",
+    "Resourceful Reactor": "🧨",
+    "Mission Mover": "🚀"
+  };
+
+  // Generate custom prompts based on answers
+  const customPrompts = Object.entries(answers).map(([q, value]) => {
+    return answerPrompts[q][value];
+  });
+
+  return `
+    <div style="margin-bottom: 2rem;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <span style="font-size: 2rem;">${emojiMap[orgTypeClean]}</span>
+        <h3 style="color: #4c5270; margin: 0;">${orgType}</h3>
+      </div>
+      <p>${descriptions[orgTypeClean].text}</p>
+      
+      <div style="margin: 2rem 0; text-align: center;">
+        <img src="https://www.reflectplando.com/images/quadrant-diagram.png" 
+             alt="Organization Type Quadrant" 
+             style="max-width: 100%; height: auto;"
+             onerror="this.style.display='none'">
+      </div>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h3 style="color: #4c5270; margin-bottom: 1rem;">Reflect</h3>
+      <p style="margin-bottom: 1rem; color: #666;">
+        These questions were generated based on your quiz responses. Use them to reflect—solo or with your team—on what it means to be a ${orgTypeClean} ${emojiMap[orgTypeClean]} in your unique context.
+      </p>
+      <ul style="list-style: none; padding: 0;">
+        ${customPrompts.map(prompt => `
+          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <p style="margin: 0; color: #4c5270;">${prompt}</p>
+          </li>
+        `).join('')}
+        ${standardPrompts.reflect.map(prompt => `
+          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <p style="margin: 0; color: #4c5270;">${prompt}</p>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h3 style="color: #4c5270; margin-bottom: 1rem;">Plan</h3>
+      <ul style="list-style: none; padding: 0;">
+        ${standardPrompts.plan.map(prompt => `
+          <li style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <p style="margin: 0; color: #4c5270;">${prompt}</p>
+          </li>
+        `).join('')}
+      </ul>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+      <h3 style="color: #4c5270; margin-bottom: 1rem;">Do!</h3>
+      <p style="margin-bottom: 1rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
+      <a href="https://calendly.com/reflectplando/consultation" class="cta-button" style="background-color: #7ed957; display: inline-block; margin-bottom: 1rem;">Schedule a Free Consultation</a>
+      <p>You can bring this to your next team meeting.</p>
+    </div>
+  `;
+}
+
+// Update form submission handler
 document.getElementById('strategyPlannerForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
@@ -418,18 +560,44 @@ document.getElementById('strategyPlannerForm').addEventListener('submit', functi
     title: document.getElementById('title').value,
     newsletter: document.getElementById('newsletter').checked,
     orgType: document.getElementById('orgType').textContent,
-    // We'll add the quiz answers here in the next step
+    answers: {}
   };
 
-  // For now, just log the data
-  console.log('Form submitted:', formData);
+  // Get quiz answers
+  const quizAnswers = {};
+  document.querySelectorAll('input[type="radio"]:checked').forEach((input) => {
+    const questionName = input.name; // This will be q1, q2, etc.
+    quizAnswers[questionName] = input.value;
+  });
+
+  // Generate and display planner
+  const plannerContent = generatePlanner(formData.orgType, quizAnswers);
+  document.getElementById('plannerContent').innerHTML = plannerContent;
   
-  // We'll implement the planner generation and PDF creation in the next step
-  alert('Strategy Planner generation coming soon!');
+  // Show planner and hide form
+  document.getElementById('plannerForm').style.display = 'none';
+  document.getElementById('plannerDisplay').style.display = 'block';
+
+  // Send data to Google Sheet
+  sendToSheet({
+    ...formData,
+    answers: quizAnswers
+  });
 });
 
-
-
+// Add back to quiz handler
+document.getElementById('backToQuiz').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('plannerDisplay').style.display = 'none';
+  document.getElementById('quizForm').style.display = 'block';
+  document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+  currentStep = 0;
+  steps.forEach((step, i) => {
+    step.classList.remove('active');
+    if (i === 0) step.classList.add('active');
+  });
+  nextBtn.style.display = 'inline-block';
+});
 
   function sendToSheet(data) {
     // Show loading state
