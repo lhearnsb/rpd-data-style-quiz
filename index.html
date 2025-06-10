@@ -628,19 +628,12 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
   button.disabled = true;
   
   try {
-    // Get the planner content
-    const content = document.getElementById('plannerContent').innerText;
-    
-    // Create new jsPDF instance
+    // Create new PDF document
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
-    // Set font
-    doc.setFont("helvetica");
-    
-    // Split content into lines
-    const lines = content.split('\n');
-    let y = 20; // Starting y position
+    // Set initial position
+    let y = 20;
     
     // Add title
     doc.setFontSize(16);
@@ -657,6 +650,10 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Reset font for body text
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
+    
+    // Get content and split into lines
+    const content = document.getElementById('plannerContent').innerText;
+    const lines = content.split('\n');
     
     // Process content
     let currentSection = '';
@@ -710,23 +707,20 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Save the PDF
     doc.save('personalized-strategy-planner.pdf');
     
-    // After generating the PDF, send it via email
-    const pdfBlob = doc.output('blob');
-    const emailSent = await sendPDFByEmail(pdfBlob);
+    // Update button to show success
+    button.textContent = 'PDF Downloaded!';
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.disabled = false;
+    }, 2000);
     
-    if (emailSent) {
-      button.textContent = 'PDF Sent to Email!';
-    } else {
-      button.textContent = 'Error - Try Again';
-    }
   } catch (error) {
     console.error('Error:', error);
     button.textContent = 'Error - Try Again';
-  } finally {
-    button.disabled = false;
     setTimeout(() => {
       button.textContent = originalText;
-    }, 3000);
+      button.disabled = false;
+    }, 2000);
   }
 });
 
