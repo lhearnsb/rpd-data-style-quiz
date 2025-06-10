@@ -636,7 +636,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     let y = 20;
     
     // Add title
-    doc.setFontSize(16);
+    doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
     doc.text("Personalized Strategy Planner", 20, y);
     y += 15;
@@ -645,7 +645,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     doc.setFontSize(14);
     const orgType = document.getElementById('orgType').innerText.split(' ').slice(1).join(' ');
     doc.text(orgType, 20, y);
-    y += 15;
+    y += 5;
     
     // Reset font for body text
     doc.setFontSize(12);
@@ -668,41 +668,47 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
       if (line.trim()) { // Only process non-empty lines
         // Check if this is a section header
         if (line.includes('Reflect') || line.includes('Plan') || line.includes('Do!')) {
-          y += 10; // Add extra space before section
+          y += 5; // Add extra space before section
           doc.setFontSize(14);
           doc.setFont("helvetica", "bold");
           currentSection = line;
+          doc.text(line, 20, y);
+          y += 6;
         } else if (line.startsWith('•')) {
           // Handle bullet points
           doc.setFontSize(10);
           doc.setFont("helvetica", "normal");
           y += 6;
+          doc.text(line, 20, y);
+          y += 6;
+          y += 4; // Add extra space after each prompt
         } else {
           // Regular text
           doc.setFontSize(11);
           doc.setFont("helvetica", "normal");
-        }
-        
-        // Add Calendly link if this is the consultation line
-        if (line.includes('Schedule a Free Consultation')) {
-          line = 'Schedule a Free Consultation: https://calendly.com/laura-hearnsberger-reflectplando/30min';
-        }
-        
-        // Split long lines into multiple lines
-        const splitLines = doc.splitTextToSize(line, maxWidth);
-        splitLines.forEach(splitLine => {
-          // Add the line
-          doc.text(splitLine, 20, y);
-          y += 7;
+
+          if (line.includes('Schedule a Free Consultation')) {
+  line = 'Schedule a Free Consultation: https://calendly.com/laura-hearnsberger-reflectplando/30min';
+}
+
+          const maxWidth = pageWidth - (2 * margin);
+          const splitLines = doc.splitTextToSize(line, maxWidth);
+          splitLines.forEach(splitLine => {
+            doc.text(splitLine, 20, y);
+            y += 7;
+});
+          y += 0;
+          y += 3; // Add extra space after paragraph
           
           // Check if we need a new page
           if (y > 270) {
             doc.addPage();
             y = 20;
           }
-        });
+        }
       }
     });
+
     
     // Save the PDF
     doc.save('personalized-strategy-planner.pdf');
