@@ -252,7 +252,7 @@
   <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
     <h3 style="margin-top: 0; color: #4c5270;">What You'll Get:</h3>
     <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0;">
-      <li style="margin-bottom: 0.5rem;">🧠 A quick guide to your org type and what it means</li>
+      <li style="margin-bottom: 0.5rem;">🧠 A guide to your org type and what it means</li>
       <li style="margin-bottom: 0.5rem;">💬 Coaching-style prompts to spark reflection and discussion</li>
       <li style="margin-bottom: 0.5rem;">🧭 Team-focused questions to turn insight into shared goals</li>
       <li style="margin-bottom: 0.5rem;">🚀 Clear next steps to move your mission forward</li>
@@ -646,9 +646,26 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Add title
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
+    //doc.setTextColor('#FF5757'); //this changed the whole doc, not just the header!
     doc.text("Personalized Strategy Planner", 20, y);
-    y += 15;
-    
+    y += 10;
+
+    // Add the quadrants image
+    const img = new Image();
+    img.src = 'https://raw.githubusercontent.com/lhearnsb/rpd-data-style-quiz/refs/heads/main/quadrants.png';
+    img.onload = function() {
+
+    // Calculate dimensions to maintain aspect ratio
+    const imgWidth = 100;  // You can adjust this width
+    const imgHeight = (img.height * imgWidth) / img.width;
+  
+    // Add the image to the PDF
+    doc.addImage(img, 'PNG', 20, y, imgWidth, imgHeight);
+  
+    // Add some space after the image
+    y += imgHeight + 10;
+};
+
     // Add organization type (without emoji)
     doc.setFontSize(14);
     const orgType = document.getElementById('orgType').innerText.split(' ').slice(1).join(' ');
@@ -699,11 +716,11 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
             line = 'Schedule a Free Consultation: https://calendly.com/laura-hearnsberger-reflectplando/30min';
             doc.text(line, 20, y);
             y += 7;
-            y += 10; // Add extra space after the link
+            y += 5; // Add extra space after the link
             
             // Add website link
-            doc.setFontSize(14);
-            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "italic");
             const websiteLink = 'Explore on Your Own';
             doc.text(websiteLink, 20, y);
             y += 7;
@@ -712,7 +729,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
             const splitLines = doc.splitTextToSize(line, maxWidth);
             splitLines.forEach(splitLine => {
               doc.text(splitLine, 20, y);
-              y += 7;
+              y += 5; // adjust line spacing within paragraphs
             });
             y += 0;
             y += 3; // Add extra space after paragraph
