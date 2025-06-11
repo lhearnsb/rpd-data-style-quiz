@@ -286,7 +286,7 @@
         </label>
       </div>
 
-      <button type="submit" class="cta-button" style="width: 100%; background-color: #7ed957;">Send My Personalized Planner</button>
+      <button type="submit" class="cta-button" style="width: 100%; background-color: #7ed957;">Access My Personalized Planner</button>
     </form>
 
     <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
@@ -297,11 +297,11 @@
 
 <div id="plannerDisplay" style="display: none;" class="result">
   <h2>Your Personalized Strategy Planner Is Ready!</h2>
-  <p style="text-align: center; margin-bottom: 2rem;">
+  <p style="text-align: center; margin-bottom: 1rem;">
     View it below—or download a copy to save or share with your team.
   </p>
   
-  <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
+  <div style="background: #fff; padding: 0rem; border-radius: 12px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0);">
     <div id="plannerContent">
       <!-- Planner content will be generated here -->
     </div>
@@ -309,10 +309,8 @@
     <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center;">
       <p style="margin-bottom: 0.5rem;">Bring this to your next team meeting.</p>
       <button id="downloadPDF" class="cta-button" style="margin-top: 0.5rem;">Download PDF</button>
-      <p style="text-align: center; margin-top: 1rem; color: #666;">
-        We've also emailed you a copy so you can forward it easily or keep it handy for future planning.
-      </p>
-      <a href="#" id="backToQuiz" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
+    
+      <a href="#" id="backToQuiz" style="color: #4c5270; margin-top: 1rem; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
 
     </div>
   </div>
@@ -370,7 +368,6 @@
     shortLink: "reflectplando.com/mission-mover"
   }
 };
-
 
     document.getElementById('quizForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -646,25 +643,16 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Add title
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
+    doc.setTextColor('#FF5757')
     //doc.setTextColor('#FF5757'); //this changed the whole doc, not just the header!
     doc.text("Personalized Strategy Planner", 20, y);
     y += 10;
 
-    // Add the quadrants image
-    const img = new Image();
-    img.src = 'https://raw.githubusercontent.com/lhearnsb/rpd-data-style-quiz/refs/heads/main/quadrants.png';
-    img.onload = function() {
+    // Reset font for body text
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(76, 82, 112)
 
-    // Calculate dimensions to maintain aspect ratio
-    const imgWidth = 100;  // You can adjust this width
-    const imgHeight = (img.height * imgWidth) / img.width;
-  
-    // Add the image to the PDF
-    doc.addImage(img, 'PNG', 20, y, imgWidth, imgHeight);
-  
-    // Add some space after the image
-    y += imgHeight + 10;
-};
 
     // Add organization type (without emoji)
     doc.setFontSize(14);
@@ -673,7 +661,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     y += 5;
     
     // Reset font for body text
-    doc.setFontSize(12);
+    doc.setFontSize(11);
     doc.setFont("helvetica", "normal");
     
     // Get content and split into lines
@@ -689,6 +677,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Skip the first few lines that contain the title and organization type
     const contentLines = lines.slice(3);
     
+
     contentLines.forEach(line => {
       if (line.trim()) { // Only process non-empty lines
         // Check if this is a section header
