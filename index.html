@@ -108,6 +108,32 @@
     color: #4c5270 !important;
   }
 
+  .cta-button-outline {
+  background: none;
+  color: #ff5757;              /* Use your brand color */
+  border: 2px solid #ff5757;   /* Outline with brand color */
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.cta-button-outline:hover {
+  background: none;
+  color: #ffb8b8;              /* Use your brand color */
+  border: 2px solid #ffb8b8;   /* Outline with brand color */
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  display: inline-block;
+}
+
   .restart-button {
     background-color: #4c5270;
     color: #fff;
@@ -233,11 +259,11 @@
 
   <div class="cta-buttons" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.2rem; align-items: center;">
     <a href="#" id="plannerLink" class="cta-button">Get My Personal Strategy Planner</a>
-    <a href="#" id="recommendationsLink" class="cta-button" target="_blank">Explore on My Own</a>
+    <a href="#" id="recommendationsLink" class="cta-button-outline" target="_blank">Explore on My Own</a>
   </div>
 
   <p style="margin-top: 1.5rem;">
-  <a href="#" id="restartLink" style="color: #4c5270; text-decoration: underline; font-size: 0.95rem;">
+  <a href="#" id="restartLink" style="color: #ff5757; font-size: 0.95rem;">
     Take the quiz again
   </a>
 </p>
@@ -344,25 +370,25 @@
 
   const descriptions = {
   "Heart-Led Hustler": {
-    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.",
+    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.<br/><br/><b>Not All Heart-Led Hustlers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
     lockedText: "Your results show that you have a clear sense of the importance of your work. What you need now is structure to sustain that passion and build a lasting legacy. Use the prompts below—solo or with your team—to help your team align mission, metrics, and momentum.",
     link: "https://www.reflectplando.com/heart-led-hustler",
     shortLink: "reflectplando.com/heart-led-hustler"
   },
   "Insight Seeker": {
-    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.",
+    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.<br/><br/><b>Not All Insight Seekers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
     lockedText: "Your results reflect a thoughtful, values-driven organization with a hunger for deeper understanding. It's time to build the structure that lets people engage with the data, ask better questions, and move ideas into motion. Use the prompts below—solo or with your team—to turn questions into answers.",
     link: "https://www.reflectplando.com/insight-seeker",
     shortLink: "reflectplando.com/insight-seeker"
   },
   "Resourceful Reactor": {
-    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.",
+    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.<br/><br/><b>Not All Resourceful Reactors Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
     lockedText: "Your results suggest that while your organization knows how to get things done, it may be operating in a reactive mode. Your next step is to bring teams together around common goals. Use the prompts below—solo or with your team—to align your strategic direction with your operational strengths.",
     link: "https://www.reflectplando.com/resourceful-reactor",
     shortLink: "reflectplando.com/resourceful-reactor"
   },
   "Mission Mover": {
-    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.",
+    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.<br/><br/><b>Not All Mission Movers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
     lockedText: "Your results show that your organization has both clarity of purpose and the structure to support it—ideal for scalable, sustainable impact. The opportunity is maintaining momentum. Use the prompts below—solo or with your team—to strengthen alignment, reinforce strategy, and look forward to the next mission.",
     link: "https://www.reflectplando.com/mission-mover",
     shortLink: "reflectplando.com/mission-mover"
