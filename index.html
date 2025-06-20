@@ -17,13 +17,14 @@
     margin: auto;
     background-color: #4c5270;
     color: #4c5270;
-    line-height: 1.5;
+    line-height: 1.25;
   }
 
   h1, h2 {
     text-align: center;
     color: #4c5270;
     font-weight: 600;
+    line-height: 1.5;
   }
 
   .quiz-hero-title {
@@ -31,11 +32,12 @@
   font-weight: 700;
   color: #ff5757; 
   margin-bottom: 0.5rem;
+  line-height: 1.25;
   }
 
  .quiz-hero-subtitle {
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.25;
   color: #fff; 
   margin-bottom: 0.5rem;
   }
@@ -45,24 +47,31 @@
     padding: 1.25rem;
     border-radius: 12px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 1.5rem;
+    line-height: 1.15;
+    margin-bottom: 1rem;
   }
 
   .question p {
     margin-top: 0;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0rem;
+    line-height: 1.25;
+
     font-weight: 500;
     font-size: 1.1rem;
   }
 
   .question label {
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
     padding: 0.4rem 0;
     cursor: pointer;
   }
 
   input[type="radio"] {
+    margin-top: 0.2rem;
     margin-right: 0.5rem;
+    margin-left: 0.5rem;
   }
 
   button {
@@ -85,6 +94,7 @@
   .result {
     background: #fff;
     padding: 1.5rem;
+    
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     margin-top: 2rem;
@@ -99,7 +109,7 @@
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     transition: background-color 0.2s ease;
   }
 
@@ -114,7 +124,7 @@
   border: 2px solid #ff5757;   /* Outline with brand color */
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
-  font-weight: bold;
+  margin-top: .5rem;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
@@ -127,7 +137,6 @@
   border: 2px solid #ffb8b8;   /* Outline with brand color */
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
-  font-weight: bold;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
@@ -171,6 +180,17 @@
     margin: 1rem 0;
     background: #fff;
   }
+
+  .planner-content li {
+  line-height: 1.2;         /* space between lines within a list item */
+  padding-bottom: 0.1rem;   /* space below each list item */
+}
+
+.planner-content p {
+  line-height: 1.2;         /* space between lines within a list item */
+  padding-bottom: 0.1rem;   /* space below each list item */
+}
+
 
   .prompt-container {
     background: #fff;
@@ -254,10 +274,10 @@
   </form>
 
 <div class="result" id="result" style="display:none;">
-  <h2>Your Org Style: <span id="orgType"></span></h2>
+  <h2><span id="orgType"></span></h2>
   <p id="orgDesc"></p>
 
-  <div class="cta-buttons" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.2rem; align-items: center;">
+  <div class="cta-buttons" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.2rem; align-items: center;">
     <a href="#" id="plannerLink" class="cta-button">Get My Personal Strategy Planner</a>
     <a href="#" id="recommendationsLink" class="cta-button-outline" target="_blank">Explore on My Own</a>
   </div>
@@ -272,59 +292,53 @@
 <div id="plannerForm" style="display: none;" class="result">
   <h2>Unlock Your Personalized Strategy Planner</h2>
   <p style="text-align: center; margin-bottom: 2rem;">
-    Based on your quiz results, this one-page guide helps you reflect, plan, and take action—on your own or with your team.
+    This downloadable planner is based on your unique combination of responses and is designed to build momentum, either on your own or with your team. It includes a guide to your style and what it means, coaching-style prompts to spark reflection and discussion, and clear next steps to move your mission forward.
   </p>
 
-  <div style="background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
-    <h3 style="margin-top: 0; color: #4c5270;">What You'll Get:</h3>
-    <ul style="list-style: none; padding: 0; margin: 0 0 2rem 0;">
-      <li style="margin-bottom: 0.5rem;">🧠 A guide to your org type and what it means</li>
-      <li style="margin-bottom: 0.5rem;">💬 Coaching-style prompts to spark reflection and discussion</li>
-      <li style="margin-bottom: 0.5rem;">🧭 Team-focused questions to turn insight into shared goals</li>
-      <li style="margin-bottom: 0.5rem;">🚀 Clear next steps to move your mission forward</li>
-    </ul>
+  <div style="background: #fff; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
+
 
     <form id="strategyPlannerForm">
       <div style="margin-bottom: 1rem;">
-        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">📧 *Email Address</label>
+        <label for="email" style="display: block; margin-bottom: 0.5rem; font-style: italic; font-size: 0.9rem; color: #4c5270;">*Email Address</label>
         <input type="email" id="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label for="name" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">👤 Name</label>
+        <label for="name" style="display: block; margin-bottom: 0.5rem; font-style: italic; font-size: 0.9rem; color: #4c5270;">Name</label>
         <input type="text" id="name" name="name" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label for="title" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">🪪 Title/Role</label>
+        <label for="title" style="display: block; margin-bottom: 0.5rem; font-style: italic; font-size: 0.9rem; color: #4c5270;">Title/Role</label>
         <input type="text" id="title" name="title" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label for="org" style="display: block; margin-bottom: 0.5rem; color: #4c5270;">🏢 Organization Name</label>
+        <label for="org" style="display: block; margin-bottom: 0.5rem; font-style: italic; font-size: 0.9rem; color: #4c5270;">Organization Name</label>
         <input type="text" id="org" name="org" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
       </div>
 
-      <div style="margin-bottom: 1.5rem;">
+      <div style="margin-bottom: 1rem;">
         <label style="display: flex; align-items: center; gap: 0.5rem; color: #4c5270;">
           <input type="checkbox" id="newsletter" name="newsletter">
-          Keep me posted on new tools and trainings
+          Keep me posted on new tools and trainings.
         </label>
       </div>
 
-      <button type="submit" class="cta-button" style="width: 100%; background-color: #7ed957;">Access My Personalized Planner</button>
+      <button type="submit" class="cta-button" style="width: 100%">See My Planner</button>
     </form>
 
-    <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+    <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #4c5270;">
       *We respect your time and inbox. No spam—just helpful tools.
     </p>
   </div>
 </div>
 
-<div id="plannerDisplay" style="display: none;" class="result">
-  <h2>Your Personalized Strategy Planner Is Ready!</h2>
-  <p style="text-align: center; margin-bottom: 1rem;">
-    View it below—or download a copy to save or share with your team.
+<div id="plannerDisplay" style="display: none; margin-bottom: .5rem;" class="result">
+  <h2>Your Personal Strategy Planner Is Ready!</h2>
+  <p style="text-align: center; margin-bottom: .5rem;">
+    View it below and download a copy to save or share with your team.
   </p>
   
   <div style="background: #fff; padding: 0rem; border-radius: 12px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0);">
@@ -370,25 +384,25 @@
 
   const descriptions = {
   "Heart-Led Hustler": {
-    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.<br/><br/><b>Not All Heart-Led Hustlers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
+    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.<br/><br/><b>Not All Heart-Led Hustlers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
     lockedText: "Your results show that you have a clear sense of the importance of your work. What you need now is structure to sustain that passion and build a lasting legacy. Use the prompts below—solo or with your team—to help your team align mission, metrics, and momentum.",
     link: "https://www.reflectplando.com/heart-led-hustler",
     shortLink: "reflectplando.com/heart-led-hustler"
   },
   "Insight Seeker": {
-    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.<br/><br/><b>Not All Insight Seekers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
+    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.<br/><br/><b>Not All Insight Seekers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
     lockedText: "Your results reflect a thoughtful, values-driven organization with a hunger for deeper understanding. It's time to build the structure that lets people engage with the data, ask better questions, and move ideas into motion. Use the prompts below—solo or with your team—to turn questions into answers.",
     link: "https://www.reflectplando.com/insight-seeker",
     shortLink: "reflectplando.com/insight-seeker"
   },
   "Resourceful Reactor": {
-    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.<br/><br/><b>Not All Resourceful Reactors Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
+    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.<br/><br/><b>Not All Resourceful Reactors Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
     lockedText: "Your results suggest that while your organization knows how to get things done, it may be operating in a reactive mode. Your next step is to bring teams together around common goals. Use the prompts below—solo or with your team—to align your strategic direction with your operational strengths.",
     link: "https://www.reflectplando.com/resourceful-reactor",
     shortLink: "reflectplando.com/resourceful-reactor"
   },
   "Mission Mover": {
-    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.<br/><br/><b>Not All Mission Movers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Next Steps.",
+    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.<br/><br/><b>Not All Mission Movers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
     lockedText: "Your results show that your organization has both clarity of purpose and the structure to support it—ideal for scalable, sustainable impact. The opportunity is maintaining momentum. Use the prompts below—solo or with your team—to strengthen alignment, reinforce strategy, and look forward to the next mission.",
     link: "https://www.reflectplando.com/mission-mover",
     shortLink: "reflectplando.com/mission-mover"
@@ -560,17 +574,17 @@ function generatePlanner(orgType, answers) {
 
   return `
     <div class="planner-content">
-      <h2 style="color: #4c5270; margin-bottom: 2rem; text-align: center; padding: 1rem;">Personalized Strategy Planner</br>for Your ${orgType} Quadrant Placement</h2>
+      <h2 style="color: #4c5270; margin-bottom: .5rem; text-align: center; padding: 1rem;">Personal Strategy Planner</br>Your ${orgType} <br/>Quadrant Placement</h2>
       
-      <div style="margin-bottom: 2rem; padding: 0 1rem;">
+      <div style="margin-bottom: 1rem; padding: 0 1rem;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
           
         </div>
         <p>${descriptions[orgTypeClean]?.lockedText || descriptions["Heart-Led Hustler"].lockedText}</p>
       </div>
 
-      <div style="margin-bottom: 2rem;">
-        <h3 style="color: #4c5270; margin-bottom: 1rem;">Reflect</h3>
+      <div style="margin-bottom: .5rem;">
+        <h3 style="color: #4c5270; margin-bottom: .5rem;">Reflect</h3>
     
         <ul style="list-style: none; padding: 0;">
           ${generatePromptList(customPrompts)}
@@ -579,7 +593,7 @@ function generatePlanner(orgType, answers) {
       </div>
 
       <div style="margin-bottom: 2rem;">
-        <h3 style="color: #4c5270; margin-bottom: 1rem;">Plan</h3>
+        <h3 style="color: #4c5270; margin-bottom: .5rem;">Plan</h3>
         <ul style="list-style: none; padding: 0;">
           ${generatePromptList(STANDARD_PROMPTS.plan)}
         </ul>
@@ -588,9 +602,9 @@ function generatePlanner(orgType, answers) {
       <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
         <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
-      
-        <p>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</p>
+        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button-outline" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
+      <br/><br/>
+        <a href=>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</a>
 
         </div>
     </div>
