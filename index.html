@@ -24,7 +24,7 @@
     text-align: center;
     color: #4c5270;
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.25;
   }
 
   .quiz-hero-title {
@@ -53,10 +53,10 @@
 
   .question p {
     margin-top: 0;
-    margin-bottom: 0rem;
+    margin-bottom: .5rem;
     line-height: 1.25;
 
-    font-weight: 500;
+    font-weight: bold;
     font-size: 1.1rem;
   }
 
@@ -290,7 +290,7 @@
 </div>
 
 <div id="plannerForm" style="display: none;" class="result">
-  <h2>Unlock Your Personalized Strategy Planner</h2>
+  <h2>Unlock Your Personal Strategy Planner</h2>
   <p style="text-align: center; margin-bottom: 2rem;">
     This downloadable planner is based on your unique combination of responses and is designed to build momentum, either on your own or with your team. It includes a guide to your style and what it means, coaching-style prompts to spark reflection and discussion, and clear next steps to move your mission forward.
   </p>
@@ -335,9 +335,9 @@
   </div>
 </div>
 
-<div id="plannerDisplay" style="display: none; margin-bottom: .5rem;" class="result">
-  <h2>Your Personal Strategy Planner Is Ready!</h2>
-  <p style="text-align: center; margin-bottom: .5rem;">
+<div id="plannerDisplay" style="display: none; margin-bottom: 0rem;" class="result">
+  <h1>Your Personal Strategy Planner<br/>Is Ready!</h1>
+  <p style="text-align: center; margin-bottom: .5rem; font-style: bold">
     View it below and download a copy to save or share with your team.
   </p>
   
@@ -574,10 +574,12 @@ function generatePlanner(orgType, answers) {
 
   return `
     <div class="planner-content">
-      <h2 style="color: #4c5270; margin-bottom: .5rem; text-align: center; padding: 1rem;">Personal Strategy Planner</br>Your ${orgType} <br/>Quadrant Placement</h2>
+      <h1 style="color: #4c5270; margin-bottom: 0rem; text-align: center; padding: 0rem;">Personal Strategy Planner</h1>
+
+      <h2 style="color: #4c5270; margin-bottom: .5rem; text-align: center; padding: 0rem;">Your ${orgType} <br/>Quadrant Placement</h2>
       
-      <div style="margin-bottom: 1rem; padding: 0 1rem;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+      <div style="margin-bottom: .5rem; padding: 0 1rem;">
+        <div style="display: flex; align-items: center; gap: 0rem; margin-bottom: 0rem;">
           
         </div>
         <p>${descriptions[orgTypeClean]?.lockedText || descriptions["Heart-Led Hustler"].lockedText}</p>
@@ -592,7 +594,7 @@ function generatePlanner(orgType, answers) {
         </ul>
       </div>
 
-      <div style="margin-bottom: 2rem;">
+      <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: .5rem;">Plan</h3>
         <ul style="list-style: none; padding: 0;">
           ${generatePromptList(STANDARD_PROMPTS.plan)}
@@ -604,7 +606,7 @@ function generatePlanner(orgType, answers) {
         <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
         <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button-outline" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
       <br/><br/>
-        <a href=>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</a>
+        <p>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</p>
 
         </div>
     </div>
@@ -685,7 +687,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     doc.setFont("helvetica", "bold");
     doc.setTextColor('#FF5757')
     //doc.setTextColor('#FF5757'); //this changed the whole doc, not just the header!
-    doc.text("Personalized Strategy Planner", 20, y);
+    doc.text("Personal Strategy Planner", 20, y);
     y += 10;
 
     // Reset font for body text
@@ -696,6 +698,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
 
     // Add organization type (without emoji)
     doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
     const orgType = document.getElementById('orgType').innerText.split(' ').slice(1).join(' ');
     doc.text(orgType, 20, y);
     y += 5;
@@ -775,7 +778,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
 
     
     // Save the PDF
-    doc.save('personalized-strategy-planner.pdf');
+    doc.save('personal-strategy-planner.pdf');
     
     // Update button to show success
     button.textContent = 'PDF Downloaded!';
@@ -885,14 +888,14 @@ document.querySelector('a[href="https://calendly.com/laura-hearnsberger-reflectp
   async function sendPDFByEmail(pdfBlob) {
     try {
       const formData = new FormData();
-      formData.append('pdf', pdfBlob, 'personalized-strategy-planner.pdf');
+      formData.append('pdf', pdfBlob, 'personal-strategy-planner.pdf');
       
       const response = await emailjs.send(
         'YOUR_SERVICE_ID', // You'll need to replace this with your EmailJS service ID
         'YOUR_TEMPLATE_ID', // You'll need to replace this with your EmailJS template ID
         {
           to_email: document.getElementById('email').value,
-          message: 'Here is your personalized strategy planner!',
+          message: 'Here is your personal strategy planner!',
           pdf: pdfBlob
         }
       );
