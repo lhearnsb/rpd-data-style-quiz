@@ -292,7 +292,7 @@
 <div id="plannerForm" style="display: none;" class="result">
   <h2>Unlock Your Personal Strategy Planner</h2>
   <p style="text-align: center; margin-bottom: 2rem;">
-    This downloadable planner is based on your unique combination of responses and is designed to build momentum, either on your own or with your team. <br/><br/> It includes a guide to your style and what it means, coaching-style prompts to spark reflection and discussion, and clear next steps to move your mission forward.
+    Your planner is based on your unique combination of responses.<br/><br/>It includes a guide to your style, coaching prompts, and clear next steps to move your mission forward.
   </p>
 
   <div style="background: #fff; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
@@ -326,8 +326,16 @@
         </label>
       </div>
 
-      <button type="submit" class="cta-button" style="width: 100%">See My Planner</button>
+      <button type="submit" class="cta-button" style="width: 100%; margin-bottom: 1rem;">See My Planner</button>
+
+      <p style="text-align: center; margin-bottom: 1rem;">Still Deciding?</br>
+         <a id="exploreOnMyOwnUnlock"  href="#" target="_blank" style="color:#ff5757; width: 60%;">Explore on Your Own</a>
+  
+        </p>
+
     </form>
+
+
 
     <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #4c5270;">
       *We respect your time and inbox. No spam—just helpful tools.
@@ -336,9 +344,7 @@
 </div>
 
 <div id="plannerDisplay" style="display: none; margin-bottom: 0rem;" class="result">
-  <h2>Your Personal Strategy Planner<br/>Is Ready!</h2>
   <p style="text-align: center; margin-bottom: .5rem; font-style: bold">
-    View it below and download a copy to save or share with your team.
   </p>
   
   <div style="background: #fff; padding: 0rem; border-radius: 12px; box-shadow: 0 2px 2px rgba(0, 0, 0, 0);">
@@ -346,9 +352,9 @@
       <!-- Planner content will be generated here -->
     </div>
 
-    <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center;">
+    <div style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
       <p style="margin-bottom: 0.5rem;">Bring this to your next team meeting.</p>
-      <button id="downloadPDF" class="cta-button" style="margin-top: 0.5rem;">Download PDF</button>
+      <button id="downloadPDF" class="cta-button-outline" style="margin-top: 0.5rem;">Download PDF</button>
     
       <a href="#" id="backToQuiz" style="color: #4c5270; margin-top: 1rem; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
 
@@ -474,6 +480,7 @@ document.getElementById('plannerLink').addEventListener('click', (e) => {
   e.preventDefault();
   document.getElementById('result').style.display = 'none';
   document.getElementById('plannerForm').style.display = 'block';
+  document.getElementById('exploreOnMyOwnUnlock').href = descriptions[type].link;
 });
 
     });
@@ -574,9 +581,9 @@ function generatePlanner(orgType, answers) {
 
   return `
     <div class="planner-content">
-      <h1 style="color: #4c5270; margin-bottom: 0rem; text-align: center; padding: 0rem;">Personal Strategy Planner</h1>
+      <h3 style="color: #4c5270; margin-bottom: 0rem; text-align: center; padding: 0rem;">Personal Strategy Planner</h3>
 
-      <h2 style="color: #4c5270; margin-bottom: .5rem; text-align: center; padding: 0rem;">Your ${orgType} <br/>Quadrant Placement</h2>
+      <h1 style="color: #4c5270; margin-bottom: .5rem; text-align: center; padding: 0rem;">Your ${orgType} <br/>Quadrant Placement</h1>
       
       <div style="margin-bottom: .5rem; padding: 0 1rem;">
         <div style="display: flex; align-items: center; gap: 0rem; margin-bottom: 0rem;">
@@ -604,7 +611,7 @@ function generatePlanner(orgType, answers) {
       <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
         <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button-outline" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
+        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
       <br/><br/>
         <p>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</p>
 
@@ -752,7 +759,8 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
             
             // Add website link
             doc.setFontSize(11);
-            doc.setFont("helvetica", "italic");
+            doc.setFont("helvetica", "italic", "bold");
+            doc.setTextColor('#FF5757');
             const websiteLink = 'Explore on Your Own';
             doc.text(websiteLink, 20, y);
             y += 7;
