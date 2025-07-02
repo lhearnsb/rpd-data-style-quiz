@@ -109,7 +109,7 @@
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: .5rem;
     transition: background-color 0.2s ease;
   }
 
@@ -279,6 +279,7 @@
 
   <div class="cta-buttons" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.2rem; align-items: center;">
     <a href="#" id="plannerLink" class="cta-button">Get My Personal Strategy Planner</a>
+
     <a href="#" id="recommendationsLink" class="cta-button-outline" target="_blank">Explore on My Own</a>
   </div>
 
@@ -286,6 +287,7 @@
   <a href="#" id="restartLink" style="color: #ff5757; font-size: 0.95rem;">
     Take the quiz again
   </a>
+  <p style="text-align: center; margin-top: 1rem; font-style: italic; font-size: 0.75rem; color: #7e87b2;">Personal Strategy Planner comes with a $50 credit toward an Action Session</p>
 </p>
 </div>
 
@@ -390,25 +392,25 @@
 
   const descriptions = {
   "Heart-Led Hustler": {
-    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.<br/><br/><b>Not All Heart-Led Hustlers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
+    text: "You lead with purpose, passion, and people in mind. Your mission inspires action—but without shared goals and structure, things can get chaotic. With the right support, your heart can drive even greater impact.<br/><br/><b>Not All Heart-Led Hustlers Are the Same.<br/>Your Personal Strategy Planner Has Custom Insights for You.</b>",
     lockedText: "Your results show that you have a clear sense of the importance of your work. What you need now is structure to sustain that passion and build a lasting legacy. Use the prompts below—solo or with your team—to help your team align mission, metrics, and momentum.",
     link: "https://www.reflectplando.com/heart-led-hustler",
     shortLink: "reflectplando.com/heart-led-hustler"
   },
   "Insight Seeker": {
-    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.<br/><br/><b>Not All Insight Seekers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
+    text: "You ask the right questions and crave better data to guide your decisions. You value strategy and reflection—but without the right tools, insights can get stuck in silos. You're ready to turn curiosity into clarity—and clarity into action.<br/><br/><b>Not All Insight Seekers Are the Same.<br/>Your Personal Strategy Planner Has Custom Insights for You.</b>",
     lockedText: "Your results reflect a thoughtful, values-driven organization with a hunger for deeper understanding. It's time to build the structure that lets people engage with the data, ask better questions, and move ideas into motion. Use the prompts below—solo or with your team—to turn questions into answers.",
     link: "https://www.reflectplando.com/insight-seeker",
     shortLink: "reflectplando.com/insight-seeker"
   },
   "Resourceful Reactor": {
-    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.<br/><br/><b>Not All Resourceful Reactors Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
+    text: "You're scrappy, responsive, and always ready to adapt. When challenges pop up, your team finds a way—but without clear systems, it's hard to sustain progress. You make things work in the moment—now it's time to build for what's next.<br/><br/><b>Not All Resourceful Reactors Are the Same.<br/>Your Personal Strategy Planner Has Custom Insights for You.</b>",
     lockedText: "Your results suggest that while your organization knows how to get things done, it may be operating in a reactive mode. Your next step is to bring teams together around common goals. Use the prompts below—solo or with your team—to align your strategic direction with your operational strengths.",
     link: "https://www.reflectplando.com/resourceful-reactor",
     shortLink: "reflectplando.com/resourceful-reactor"
   },
   "Mission Mover": {
-    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.<br/><br/><b>Not All Mission Movers Are the Same.<b/><br/>Your Personal Strategy Planner Has Custom Insights for You.",
+    text: "You turn alignment into action. With clear goals, connected teams, and the right structure in place, your organization is ready for lift-off. You don't just talk about impact—you make it happen.<br/><br/><b>Not All Mission Movers Are the Same.<br/>Your Personal Strategy Planner Has Custom Insights for You.</b>",
     lockedText: "Your results show that your organization has both clarity of purpose and the structure to support it—ideal for scalable, sustainable impact. The opportunity is maintaining momentum. Use the prompts below—solo or with your team—to strengthen alignment, reinforce strategy, and look forward to the next mission.",
     link: "https://www.reflectplando.com/mission-mover",
     shortLink: "reflectplando.com/mission-mover"
@@ -477,6 +479,14 @@ document.getElementById('recommendationsLink').href = descriptions[type].link;
 
 // Update the planner link click handler
 document.getElementById('plannerLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('plannerForm').style.display = 'block';
+  document.getElementById('exploreOnMyOwnUnlock').href = descriptions[type].link;
+});
+
+// Add another update planner link click handler
+document.getElementById('plannerLink2').addEventListener('click', (e) => {
   e.preventDefault();
   document.getElementById('result').style.display = 'none';
   document.getElementById('plannerForm').style.display = 'block';
@@ -611,7 +621,7 @@ function generatePlanner(orgType, answers) {
       <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
         <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Free Consultation</a>
+        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Consultation</a>
       <br/><br/>
         <p>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</p>
 
