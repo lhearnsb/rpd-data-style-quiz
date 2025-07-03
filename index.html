@@ -287,14 +287,14 @@
   <a href="#" id="restartLink" style="color: #ff5757; font-size: 0.95rem;">
     Take the quiz again
   </a>
-  <p style="text-align: center; margin-top: 1rem; font-style: italic; font-size: 0.75rem; color: #7e87b2;">Personal Strategy Planner comes with a $50 credit toward an Action Session</p>
+  <p style="text-align: center; margin-top: 1rem; font-style: italic; font-weight: bold; font-size: 0.75rem; color: #7e87b2;">Personal Strategy Planner comes with a $50 credit toward an Action Session.</p>
 </p>
 </div>
 
 <div id="plannerForm" style="display: none;" class="result">
   <h2>Unlock Your Personal Strategy Planner</h2>
   <p style="text-align: center; margin-bottom: 2rem;">
-    Your planner is based on your unique combination of responses.<br/><br/>It includes a guide to your style, coaching prompts, and clear next steps to move your mission forward.
+    Your planner is based on your unique combination of responses. It includes a guide to your style, coaching prompts, and clear next steps to move your mission forward.
   </p>
 
   <div style="background: #fff; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);">
@@ -322,26 +322,28 @@
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <label style="display: flex; align-items: center; gap: 0.5rem; color: #4c5270;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; color: #4c5270; font-style: italic; font-size: 0.9rem;">
           <input type="checkbox" id="newsletter" name="newsletter">
           Keep me posted on new tools and trainings.
         </label>
       </div>
 
-      <button type="submit" class="cta-button" style="width: 100%; margin-bottom: 1rem;">See My Planner</button>
+      <button type="submit" class="cta-button" style="width: 100%; margin-bottom: 1rem;">See My Personal Strategy Planner</button>
 
-      <p style="text-align: center; margin-bottom: 1rem;">Still Deciding?</br>
+      <p style="text-align: center; margin-top: .7rem; font-size: 0.9rem; font-style: italic; font-weight: bold; color: #4c5270;">
+        *We respect your time and inbox. No spam—just helpful tools.<br/>
+        You’ll also get a $50 credit toward an Action Session.
+      </p>
+
+      <p style="text-align: center; margin-bottom: 1rem;"><small><em>Still Deciding?</br>
          <a id="exploreOnMyOwnUnlock"  href="#" target="_blank" style="color:#ff5757; width: 60%;">Explore on Your Own</a>
-  
-        </p>
+        </em></small></p>
 
     </form>
 
 
 
-    <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #4c5270;">
-      *We respect your time and inbox. No spam—just helpful tools.
-    </p>
+    
   </div>
 </div>
 
@@ -355,7 +357,8 @@
     </div>
 
     <div style="margin-top: 1rem; display: flex; flex-direction: column; align-items: center;">
-      <p style="margin-bottom: 0.5rem;">Bring this to your next team meeting.</p>
+      <p style="margin-bottom: 0.5rem;"><small><b>Take this with you!</b><br/>
+        <em>Download a printable version to share or revisit when you're ready.</em></small></p>
       <button id="downloadPDF" class="cta-button-outline" style="margin-top: 0.5rem;">Download PDF</button>
     
       <a href="#" id="backToQuiz" style="color: #4c5270; margin-top: 1rem; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
@@ -620,10 +623,13 @@ function generatePlanner(orgType, answers) {
 
       <div style="margin-bottom: 1rem;">
         <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
-        <p style="margin-bottom: 0.5rem;">Curious how this shows up in your org's numbers? Let's explore that together.</p>
-        <a href="https://calendly.com/laura-hearnsberger-reflectplando/30min" class="cta-button" style="margin-top: 0.5rem;">Schedule a Consultation</a>
-      <br/><br/>
-        <p>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</p>
+        <p style="margin-bottom: 0.5rem;"><b>Need clarity on what to do next?</b></br>
+          A 45-minute Action Session connects your quiz insights to real decisions—so you can walk away with a plan you’re ready to act on.<br/></p>
+        <a href="https://www.reflectplando.com/quiz-credit" target="_blank" class="cta-button" style="margin-top: 0.5rem;">Book My Action Session</a>
+
+        <p><small><em>Action Sessions normally cost $150, but you earned a $50 credit by taking the quiz.<br/>Apply the cost toward a future engagement.</em><br/></small></p>
+      
+        <p><small>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</small></p>
 
         </div>
     </div>
@@ -761,20 +767,26 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
           doc.setFontSize(11);
           doc.setFont("helvetica", "normal");
 
-          if (line.includes('Schedule a Free Consultation')) {
-            line = 'Schedule a Free Consultation: https://calendly.com/laura-hearnsberger-reflectplando/30min';
+          if (line.includes('Book My Action Session')) {
+            line = 'Book My Action Session: https://www.reflectplando.com/quiz-credit';
             doc.text(line, 20, y);
             y += 7;
             y += 5; // Add extra space after the link
             
             // Add website link
             doc.setFontSize(11);
-            doc.setFont("helvetica", "italic", "bold");
-            doc.setTextColor('#FF5757');
-            const websiteLink = 'Explore on Your Own';
+            doc.setFont("helvetica", "bold");
+            //doc.setTextColor('#FF5757');
+            const websiteLink = 'Notes';
             doc.text(websiteLink, 20, y);
+            
             y += 7;
-          } else {
+          } 
+          
+          
+          
+          
+          else {
             const maxWidth = pageWidth - (2 * margin);
             const splitLines = doc.splitTextToSize(line, maxWidth);
             splitLines.forEach(splitLine => {
@@ -816,7 +828,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
 });
 
 // Update the consultation link to open in a new tab
-document.querySelector('a[href="https://calendly.com/laura-hearnsberger-reflectplando/30min"]').setAttribute('target', '_blank');
+document.querySelector('a[href="https://www.reflectplando.com/quiz-credit"]').setAttribute('target', '_blank');
 
   function sendToSheet(data) {
     // Show loading state
