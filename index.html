@@ -11,7 +11,7 @@
 
   <style>
   body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Noto Sans', Tahoma, Geneva, Verdana, sans-serif;
     padding: 2rem 1rem;
     max-width: 640px;
     margin: auto;
@@ -21,6 +21,7 @@
   }
 
   h1, h2 {
+    font-family: 'Anton', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     color: #222222;
     font-weight: 600;
@@ -29,7 +30,7 @@
 
   .quiz-hero-title {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #ff5757; 
   margin-bottom: 0.5rem;
   line-height: 1.25;
@@ -206,7 +207,7 @@
 <body>  
   <section style="text-align: center; padding: 2rem 1rem; max-width: 600px; margin: auto;">
   
-<h1 class="quiz-hero-title">Do Your Decisions<br/>Match Your Mission?</h1>
+<h1 class="quiz-hero-title">DO YOUR DECISIONS<br/>MATCH YOUR MISSION?</h1>
 
 <p class="quiz-hero-subtitle">  
     Take Our Quick Quiz to Find Out. 
@@ -360,7 +361,7 @@
         <em>Download a printable version to share or revisit when you're ready.</em></small></p>
       <button id="downloadPDF" class="cta-button-outline" style="margin-top: 0.5rem;">Download PDF</button>
     
-      <a href="#" id="backToQuiz" style="color: #4c5270; margin-top: 1rem; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
+      <a href="#" id="backToQuiz" style="color: #222222; margin-top: 1rem; text-decoration: underline; font-size: 0.95rem;">Take the quiz again</a>
 
     </div>
   </div>
@@ -614,17 +615,17 @@ function generatePlanner(orgType, answers) {
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <h3 style="color: #4c5270; margin-bottom: .5rem;">Plan</h3>
+        <h3 style="color: #222222; margin-bottom: .5rem;">Plan</h3>
         <ul style="list-style: none; padding: 0;">
           ${generatePromptList(STANDARD_PROMPTS.plan)}
         </ul>
       </div>
 
       <div style="margin-bottom: 1rem;">
-        <h3 style="color: #4c5270; margin-bottom: 0.5rem;">Do!</h3>
+        <h3 style="color: #222222; margin-bottom: 0.5rem;">Do!</h3>
         <p style="margin-bottom: 0.5rem;"><b>Need clarity on what to do next?</b></br>
           A 45-minute Action Session connects your quiz insights to real decisions. You walk away with focused next steps.<br/></p>
-        <a href="https://www.reflectplando.com/quiz-credit" target="_blank" class="cta-button" style="margin-top: 0.5rem;">Book My Action Session</a>
+        <a href="https://www.reflectplando.com/quiz-credit" target="_blank" class="cta-button" style="margin-top: 0.5rem;">Book a Chat to Learn More</a>
 
       
         <p><small>${descriptions[orgTypeClean]?.link || descriptions["Heart-Led Hustler"].link}</small></p>
@@ -765,8 +766,8 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
           doc.setFontSize(11);
           doc.setFont("helvetica", "normal");
 
-          if (line.includes('Book My Action Session')) {
-            line = 'Book My Action Session: https://www.reflectplando.com/quiz-credit';
+          if (line.includes('Book a Chat to Learn More')) {
+            line = 'Book a Chat to Learn More: https://www.reflectplando.com/quiz-credit';
             doc.text(line, 20, y);
             y += 7;
             y += 5; // Add extra space after the link
