@@ -460,7 +460,7 @@ sendToSheet({
       document.getElementById('result').style.display = 'block';
      
       const emojiMap = {
-  "Heart-Led Hustler": "H-L-H",
+  "Heart-Led Hustler": "❤️",
   "Insight Seeker": "🧭",
   "Resourceful Reactor": "🧨",
   "Mission Mover": "🚀"
@@ -510,7 +510,7 @@ document.getElementById('plannerLink2').addEventListener('click', (e) => {
 
 // Constants and configuration
 const EMOJI_MAP = {
-  "Heart-Led Hustler": "H-L-H",
+  "Heart-Led Hustler": "❤️",
   "Insight Seeker": "🧭",
   "Resourceful Reactor": "🧨",
   "Mission Mover": "🚀"
@@ -583,7 +583,7 @@ function generatePromptList(prompts) {
 // Main planner generation function
 function generatePlanner(orgType, answers) {
   const orgTypeClean = cleanOrgType(orgType);
- // const emoji = EMOJI_MAP[orgTypeClean] || '❤️';
+  const emoji = EMOJI_MAP[orgTypeClean] || '❤️';
   
   // Generate custom prompts based on answers
   const customPrompts = Object.entries(answers).map(([q, value]) => ANSWER_PROMPTS[q][value]);
