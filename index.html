@@ -76,11 +76,12 @@
   }
 
   button {
-    background-color: #fff;
-    color: #444444;
+    background-color: #f9f940;
+    color: #222222;
     border: none;
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
+    text-transform: uppercase;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -105,10 +106,12 @@
   .cta-button {
     display: inline-block;
     background-color: #ff5757;
-    border: 1px solid #222222;
+    border: 1px solid #444444;
     color: #f9f940 !important;
     padding: 0.6rem 1.2rem;
     text-decoration: none;
+    text-transform:uppercase;
+    font-size: large;
     border-radius: 6px;
     font-weight: strong;
     margin-top: .5rem;
@@ -122,11 +125,12 @@
 
   .cta-button-outline {
   background: none;
-  color: #ff5757;              /* Use your brand color */
+  color: #ff5757 !important;              /* Use your brand color */
   border: 2px solid #ff5757;   /* Outline with brand color */
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   margin-top: .5rem;
+  text-transform: uppercase;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
@@ -172,7 +176,17 @@
 
   #nextBtn {
   display: block;
-  margin: 1.5rem auto 0;
+  margin: .5rem auto 0;
+    background-color: #f9f940;
+    border: 1px solid #444444;
+    color: #222222 !important;
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    text-transform:uppercase;
+    font-style: italic;
+    border-radius: 6px;
+    font-weight: strong;
+    transition: background-color 0.2s ease;
   }
 
   .planner-content {
@@ -885,8 +899,8 @@ document.querySelector('a[href="https://www.reflectplando.com/quiz-credit"]').se
       
       // Show success state
       submitButton.textContent = originalButtonText;
-      submitButton.style.backgroundColor = '#7ed957';
-      submitButton.style.color = '#fff';
+      submitButton.style.backgroundColor = '#f9f940';
+      submitButton.style.color = '#222222';
       
       // Reset button after 2 seconds
       setTimeout(() => {
