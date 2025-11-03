@@ -104,8 +104,9 @@
 
   .cta-button {
     display: inline-block;
-    background-color: #fd0c31;
-    color: #fff !important;
+    background-color: #ff5757;
+    border: 1px solid #222222;
+    color: #f9f940 !important;
     padding: 0.6rem 1.2rem;
     text-decoration: none;
     border-radius: 6px;
@@ -121,8 +122,8 @@
 
   .cta-button-outline {
   background: none;
-  color: #fd0c31;              /* Use your brand color */
-  border: 2px solid #fd0c31;   /* Outline with brand color */
+  color: #ff5757;              /* Use your brand color */
+  border: 2px solid #ff5757;   /* Outline with brand color */
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   margin-top: .5rem;
@@ -175,7 +176,7 @@
   }
 
   .planner-content {
-    border: 2px solid #fd0c31;
+    border: 2px solid #ff5757;
     border-radius: 12px;
     padding: 1rem;
     margin: 1rem 0;
@@ -281,7 +282,7 @@
   </div>
 
   <p style="margin-top: 1.5rem;">
-  <a href="#" id="restartLink" style="color: #fd0c31; font-size: 0.95rem;">
+  <a href="#" id="restartLink" style="color: #ff5757; font-size: 0.95rem;">
     Take the quiz again
   </a>
   <p style="text-align: center; margin-top: 1rem; font-style: italic; font-weight: bold; font-size: 0.75rem; color: #7e87b2;">Custom Strategy Guide is based on your unique combination of responses. It includes a guide to your style, coaching prompts, and clear next steps to move your mission forward.</p>
@@ -332,7 +333,7 @@
       </p>
 
       <p style="text-align: center; margin-bottom: 1rem;"><small><em>Still Deciding?</br>
-         <a id="exploreOnMyOwnUnlock"  href="#" target="_blank" style="color:#fd0c31; width: 60%;">Explore on Your Own</a>
+         <a id="exploreOnMyOwnUnlock"  href="#" target="_blank" style="color:#ff5757; width: 60%;">Explore on Your Own</a>
         </em></small></p>
 
     </form>
@@ -703,7 +704,7 @@ document.getElementById('downloadPDF').addEventListener('click', async function(
     // Add title
     doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor('#fd0c31')
+    doc.setTextColor('#ff5757')
     //doc.setTextColor('#FF5757'); //this changed the whole doc, not just the header!
     doc.text("Custom Strategy Guide", 20, y);
     y += 10;
